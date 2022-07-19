@@ -1,0 +1,4 @@
+br/ufscar/dc/dsw/domain/Agencia.class
+br/ufscar/dc/dsw/domain/Pacote.class
+br/ufscar/dc/dsw/domain/Cliente.class
+br/ufscar/dc/dsw/controller/apiController.class
