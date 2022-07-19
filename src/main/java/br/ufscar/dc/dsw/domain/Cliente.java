@@ -4,29 +4,33 @@ public class Cliente {
 
     private Long id;
     private String email;
+    private String nome;
     private String senha;
     private String cpf;
     private String telefone;
     private String sexo;
-    private Long nascimento;
+    private String nascimento;
+    private int admin;
 
     public Cliente(Long id) {
         this.id = id;
     }
 
-    public Cliente(String email, String senha, String cpf, String telefone,
-            String sexo, Long nascimento) {
+    public Cliente(String email, String nome, String senha, String cpf, String telefone,
+            String sexo, String nascimento, int admin) {
         this.email = email;
+        this.nome = nome;
         this.senha = senha;
         this.cpf = cpf;
         this.telefone = telefone;
         this.sexo = sexo;
         this.nascimento = nascimento;
+        this.admin = admin;
     }
 
-    public Cliente(Long id, String email, String senha, String cpf, String telefone,
-    String sexo, Long nascimento) {
-        this(email, senha, cpf, telefone, sexo, nascimento);
+    public Cliente(Long id, String email, String nome, String senha, String cpf, String telefone,
+    String sexo, String nascimento, int admin) {
+        this(email, nome, senha, cpf, telefone, sexo, nascimento, admin);
         this.id = id;
     }
 
@@ -46,6 +50,14 @@ public class Cliente {
         this.email = email;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
     public String getSenha() {
         return senha;
     }
@@ -54,7 +66,7 @@ public class Cliente {
         this.senha = senha;
     }
 
-    public String getCpf(String cpf) {
+    public String getCpf() {
         return cpf;
     }
 
@@ -78,11 +90,19 @@ public class Cliente {
         this.sexo = sexo;
     }
 
-    public Long getNascimento() {
+    public String getNascimento() {
         return nascimento;
     }
 
-    public void setNascimento(Long nascimento) {
+    public void setNascimento(String nascimento) {
         this.nascimento = nascimento;
+    }
+
+    public int getAdmin() {
+        return admin;
+    }
+
+    public void setNascimento(int admin) {
+        this.admin = admin;
     }
 }

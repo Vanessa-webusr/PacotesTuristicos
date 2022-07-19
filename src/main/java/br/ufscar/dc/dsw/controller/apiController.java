@@ -14,7 +14,7 @@ package br.ufscar.dc.dsw.controller;
 
      protected void processRequest(HttpServletRequest request, HttpServletResponse response)
              throws ServletException, IOException {
-         request.getRequestDispatcher("views/campo.jsp").forward(request, response);
+         request.getRequestDispatcher("views/listaPacote.jsp").forward(request, response);
          // request.getRequestDispatcher("PrintParams").forward(request, response);
      }
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Pacote {
 
     private Long id;
+    private String cnpj;
     private String cidade;
     private String estado;
     private String pais;
@@ -18,8 +19,9 @@ public class Pacote {
         this.id = id;
     }
 
-    public Pacote(String cidade, String estado, String pais, String partida,
+    public Pacote(String cnpj, String cidade, String estado, String pais, String partida,
     String duracao, Float valor, ArrayList<String> imagem, String descricao) {
+        this.cnpj = cnpj;
         this.cidade = cidade;
         this.estado = estado;
         this.pais = pais;
@@ -30,9 +32,9 @@ public class Pacote {
         this.descricao = descricao;
     }
 
-    public Pacote(Long id, String cidade, String estado, String pais, String partida,
+    public Pacote(Long id, String cnpj, String cidade, String estado, String pais, String partida,
     String duracao, Float valor, ArrayList<String> imagem, String descricao) {
-        this(cidade, estado, pais, partida, duracao, valor, imagem, descricao);
+        this(cnpj, cidade, estado, pais, partida, duracao, valor, imagem, descricao);
         this.id = id;
     }
 
@@ -42,6 +44,14 @@ public class Pacote {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
     public String getCidade() {
