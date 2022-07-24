@@ -17,7 +17,7 @@
 	</div>
 	<div align="center">
 		<c:choose>
-			<c:when test="${livro != null}">
+			<c:when test="${cliente != null}">
 				<form action="atualizacao" method="post">
 					<%@include file="camposCliente.jsp"%>
 				</form>

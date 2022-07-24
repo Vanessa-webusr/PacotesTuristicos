@@ -1,6 +1,7 @@
 package br.ufscar.dc.dsw.domain;
 
-import java.util.ArrayList;
+import java.util.List;
+import br.ufscar.dc.dsw.domain.Imagem;
 
 public class Pacote {
 
@@ -12,7 +13,7 @@ public class Pacote {
     private String partida;
     private String duracao;
     private Float valor;
-    private ArrayList<String> imagem;
+    private Imagem[] imagem;
     private String descricao;
 
     public Pacote(Long id) {
@@ -20,7 +21,7 @@ public class Pacote {
     }
 
     public Pacote(String cnpj, String cidade, String estado, String pais, String partida,
-    String duracao, Float valor, ArrayList<String> imagem, String descricao) {
+    String duracao, Float valor, Imagem[] imagem, String descricao) {
         this.cnpj = cnpj;
         this.cidade = cidade;
         this.estado = estado;
@@ -33,7 +34,7 @@ public class Pacote {
     }
 
     public Pacote(Long id, String cnpj, String cidade, String estado, String pais, String partida,
-    String duracao, Float valor, ArrayList<String> imagem, String descricao) {
+    String duracao, Float valor, Imagem[] imagem, String descricao) {
         this(cnpj, cidade, estado, pais, partida, duracao, valor, imagem, descricao);
         this.id = id;
     }
@@ -102,11 +103,11 @@ public class Pacote {
         this.valor = valor;
     }
 
-    public ArrayList<String> getImagem() {
+    public Imagem[] getImagem() {
         return imagem;
     }
 
-    public void setImagem(ArrayList<String> imagem) {
+    public void setImagem(Imagem[] imagem) {
         this.imagem = imagem;
     }
 

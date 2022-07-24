@@ -12,12 +12,12 @@
 	<div align="center">
 		<h1>Gerenciamento de Agencias</h1>
 		<h2>
-			<a href="lista">Lista de Livros</a>
+			<a href="listaAgencia">Lista de Agencia</a>
 		</h2>
 	</div>
 	<div align="center">
 		<c:choose>
-			<c:when test="${livro != null}">
+			<c:when test="${agencia != null}">
 				<form action="atualizacao" method="post">
 					<%@include file="camposAgencia.jsp"%>
 				</form>

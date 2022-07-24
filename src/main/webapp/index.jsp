@@ -7,6 +7,6 @@
         <title>Compra e venda de pacotes</title>
     </head>
     <body>
-        <a href="api">Ir para o site</a>
+        <a href="api/listaPacote">Ir para o site</a>
     </body>
 </html>

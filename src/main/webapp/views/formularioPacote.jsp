@@ -17,14 +17,14 @@
 	</div>
 	<div align="center">
 		<c:choose>
-			<c:when test="${livro != null}">
-				<form action="atualizacao" method="post">
-					<%@include file="campos.jsp"%>
+			<c:when test="${pacote != null}">
+				<form action="atualizaPacote" method="post">
+					<%@include file="camposPacote.jsp"%>
 				</form>
 			</c:when>
 			<c:otherwise>
-				<form action="insercao" method="post">
-					<%@include file="campos.jsp"%>
+				<form action="inserePacote" method="post">
+					<%@include file="camposPacote.jsp"%>
 				</form>
 			</c:otherwise>
 		</c:choose>

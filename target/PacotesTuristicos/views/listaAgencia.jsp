@@ -11,10 +11,10 @@
 		String contextPath = request.getContextPath().replace("/", "");
 	%>
 	<div align="center">
-		<h1>Gerenciamento de Agencia</h1>
+		<h1>Lista de Agencia</h1>
 		<h2>
 			<a href="/<%=contextPath%>">Menu Principal</a> &nbsp;&nbsp;&nbsp; <a
-				href="/<%=contextPath%>/cliente/cadastro">Adicione Nova Agencia</a>
+				href="/<%=contextPath%>/agencia/cadastro">Adicione Nova Agencia</a>
 		</h2>
 	</div>
 
@@ -29,17 +29,17 @@
 				<th>Nome</th>
 				<th>Descricao</th>
 			</tr>
-			<c:forEach var="cliente" items="${requestScope.listaLivros}">
+			<c:forEach var="agencia" items="${requestScope.listaAgencia}">
 				<tr>
-					<td>${}</td>
-					<td>${}</td>
-					<td>${}</td>
-					<td>${}</td>
-					<td>${}</td>
-					<td>${}</td>
-					<td><a href="/<%= contextPath%>/livros/edicao?id=${livro.id}">Edição</a>
+					<td>${agencia.id}</td>
+					<td>${agencia.email}</td>
+					<td>${agencia.senha}</td>
+					<td>${agencia.cnpj}</td>
+					<td>${agencia.nome}</td>
+					<td>${agencia.descricao}</td>
+					<td><a href="/<%= contextPath%>/agencia/edicao?id=${agencia.id}">Edição</a>
 						&nbsp;&nbsp;&nbsp;&nbsp; <a
-						href="/<%= contextPath%>/livros/remocao?id=${livro.id}"
+						href="/<%= contextPath%>/agencia/remocao?id=${agencia.id}"
 						onclick="return confirm('Tem certeza de que deseja excluir este item?');">
 							Remoção </a></td>
 				</tr>

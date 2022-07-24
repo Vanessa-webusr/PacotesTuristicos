@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufscar.dc.dsw.domain.Imagem;
+import br.ufscar.dc.dsw.dao.ImagemDAO;
 import br.ufscar.dc.dsw.domain.Pacote;
 
 public class PacoteDAO extends GenericDAO{
@@ -60,10 +62,10 @@ public class PacoteDAO extends GenericDAO{
                 Float valor = resultSet.getFloat("valor");
                 String descricao = resultSet.getString("descricao");
                 
-                ArrayList<String> listaFoto = new ArrayList<>();
+                ImagemDAO imagemDao = new ImagemDAO();
+                Imagem[] listaImagem = imagemDao.getPorPacote(id);
 
-                listaFoto = getFoto(id);
-                Pacote pacote = new Pacote(id, cnpj, cidade, estado, pais, partida, duracao, valor, listaFoto, descricao);
+                Pacote pacote = new Pacote(id, cnpj, cidade, estado, pais, partida, duracao, valor, listaImagem, descricao);
                 listaPacote.add(pacote);
             }
             resultSet.close();
@@ -73,31 +75,6 @@ public class PacoteDAO extends GenericDAO{
             throw new RuntimeException(e);
         }
         return listaPacote;
-    }
-
-    public ArrayList<String> getFoto(Long pacoteId) {
-        ArrayList<String> listaFoto = new ArrayList<>();
-
-        String sql = "SELECT imagem FROM Foto WHERE pacote_id = ?";
-
-        try {
-            Connection conn = this.getConnection();
-            PreparedStatement statement = conn.prepareStatement(sql);
-
-            statement.setLong(1, pacoteId);
-            ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()){
-                String imagem = resultSet.getString("imagem");
-                listaFoto.add(imagem);
-            }
-
-            resultSet.close();
-            statement.close();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return listaFoto;
     }
 
     public List<Pacote> getPorAgencia(Long agenciaId){
@@ -123,10 +100,10 @@ public class PacoteDAO extends GenericDAO{
                 Float valor = resultSet.getFloat("valor");
                 String descricao = resultSet.getString("descricao");
                 
-                ArrayList<String> listaFoto = new ArrayList<>();
+                ImagemDAO imagemDao = new ImagemDAO();
+                Imagem[] listaImagem = imagemDao.getPorPacote(id);
 
-                listaFoto = getFoto(id);
-                Pacote pacote = new Pacote(id, cnpj, cidade, estado, pais, partida, duracao, valor, listaFoto, descricao);
+                Pacote pacote = new Pacote(id, cnpj, cidade, estado, pais, partida, duracao, valor, listaImagem, descricao);
                 listaPacote.add(pacote);
             }
             resultSet.close();
@@ -203,11 +180,11 @@ public class PacoteDAO extends GenericDAO{
                 Float valor = resultSet.getFloat("valor");
                 String descricao = resultSet.getString("descricao");
 
-                ArrayList<String> listaFoto = new ArrayList<>();
+                ImagemDAO imagemDao = new ImagemDAO();
+                Imagem[] listaImagem = imagemDao.getPorPacote(id);
 
-                listaFoto = getFoto(id);
 
-                pacote = new Pacote(id, cnpj, cidade, estado, pais, partida, duracao, valor, listaFoto, descricao);
+                pacote = new Pacote(id, cnpj, cidade, estado, pais, partida, duracao, valor, listaImagem, descricao);
             }
 
             resultSet.close();
@@ -217,5 +194,29 @@ public class PacoteDAO extends GenericDAO{
             throw new RuntimeException(e);
         }
         return pacote;
+    }
+
+    public Long getIdByCnpj(String cnpj) {
+        Long id = null;
+
+        String sql = "SELECT * from Pacote where cnpj = ? ";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, cnpj);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                id = resultSet.getLong("id");
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return id;
     }
 }

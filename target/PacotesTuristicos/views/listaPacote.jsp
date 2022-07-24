@@ -14,7 +14,7 @@
 		<h1>Gerenciamento de Pacote de Viagens</h1>
 		<h2>
 			<a href="/<%=contextPath%>">Menu Principal</a> &nbsp;&nbsp;&nbsp; <a
-				href="/<%=contextPath%>/api">Adicione Nova Agencia</a>
+				href="/<%=contextPath%>/api/cadastraPacote">Adicione Nova Agencia</a>
 		</h2>
 	</div>
 
@@ -29,7 +29,16 @@
 				<th>Data de partida</th>
 				<th>Duracao</th>
 				<th>Valor</th>
-				<th>Imagens</th>
+				<th>Imagens 1</th>
+				<th>Imagens 2</th>
+				<th>Imagens 3</th>
+				<th>Imagens 4</th>
+				<th>Imagens 5</th>
+				<th>Imagens 6</th>
+				<th>Imagens 7</th>
+				<th>Imagens 8</th>
+				<th>Imagens 9</th>
+				<th>Imagens 10</th>
 				<th>Descricao</th>
 				<th>CNPJ</th>
 			</tr>
@@ -42,12 +51,14 @@
 					<td>${pacote.partida}</td>
 					<td>${pacote.duracao}</td>
 					<td>${pacote.valor}</td>
-					<td>${pacote.imagens}</td>
+					<c:forEach var="i" varStatus="i" begin="0" end="9" step="1">
+					<td><img src="${pacote.imagem[${i}].getLink}" width="50" height="50"></td>
+					</c:forEach>
 					<td>${pacote.descricao}</td>
 					<td>${pacote.cnpj}</td>
-					<td><a href="/<%= contextPath%>/livros/edicao?id=${livro.id}">Edição</a>
+					<td><a href="/<%= contextPath%>/api/edicaoPacote?id=${pacote.id}">Edição</a>
 						&nbsp;&nbsp;&nbsp;&nbsp; <a
-						href="/<%= contextPath%>/livros/remocao?id=${livro.id}"
+						href="/<%= contextPath%>/api/removePacote?id=${pacote.id}"
 						onclick="return confirm('Tem certeza de que deseja excluir este item?');">
 							Remoção </a></td>
 				</tr>
