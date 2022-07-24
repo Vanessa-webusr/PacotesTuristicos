@@ -18,7 +18,7 @@
 		<input type="hidden" name="id" value="${pacote.id}" />
 	</c:if>
 		<td><label for="CNPJ">CNPJ</label></td>
-		<td><input type="text" id="CNPJ" name="CNPJ" size="45"
+		<td><input type="text" id="CNPJ" name="cnpj" size="45"
 			required value="${pacote.cnpj}" /></td>
 	</tr>
 	<tr>
@@ -62,7 +62,7 @@
     <tr>
 		<c:forEach var="i" varStatus="i" begin="1" end="10" step="1">
 		<td><label for="imagem"> Imagem ${i.count}</label></td>
-		<td><input type = "text" id="imagem${i.count}" name="imagem${i.count}"></td>
+		<td><input type = "text" id="imagem" name="imagem[]"></td>
 		</c:forEach>
 	</tr>
     <tr>

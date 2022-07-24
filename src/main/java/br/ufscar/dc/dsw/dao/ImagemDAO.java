@@ -31,7 +31,7 @@ public class ImagemDAO extends GenericDAO{
         }
     }
 
-        public Imagem[] getPorPacote(Long pacote_id){
+    public Imagem[] getPorPacote(Long pacote_id){
 
         String sql = "SELECT * FROM Foto WHERE pacote_id = ?";
         Imagem[] listaImagem = {new Imagem()};
@@ -44,7 +44,7 @@ public class ImagemDAO extends GenericDAO{
             int i = 0;
             while(resultSet.next()){
                 Long id = resultSet.getLong("id");
-                String link = resultSet.getString("link");
+                String link = resultSet.getString("imagem");
 
                 Imagem imagem = new Imagem(id, pacote_id, link);
                 listaImagem[i] = imagem;
@@ -85,7 +85,8 @@ public class ImagemDAO extends GenericDAO{
             PreparedStatement statement = conn.prepareStatement(sql);
 
             statement.setLong(1, imagem.getPacoteId());
-            statement.setString(2, imagem.getLink()); 
+            statement.setString(2, imagem.getLink());
+            statement.setLong(3, imagem.getId());
             statement.executeUpdate();
 
             statement.close();
@@ -120,5 +121,26 @@ public class ImagemDAO extends GenericDAO{
             throw new RuntimeException(e);
         }
         return imagem;
+    }
+
+    public Long idByPacoteLink(Long pacote_id, String link){
+        Long id = (long) -1;
+        String sql = "SELECT * FROM Foto WHERE pacote_id = ?, imagem = ?";
+        try{
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setLong(1, pacote_id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                id = resultSet.getLong("id");
+            }
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return id;
     }
 }

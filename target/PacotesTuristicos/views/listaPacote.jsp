@@ -14,7 +14,7 @@
 		<h1>Gerenciamento de Pacote de Viagens</h1>
 		<h2>
 			<a href="/<%=contextPath%>">Menu Principal</a> &nbsp;&nbsp;&nbsp; <a
-				href="/<%=contextPath%>/api/cadastraPacote">Adicione Nova Agencia</a>
+				href="//<%= contextPath%>/api/cadastroPacote">Adicione Novo Pacote</a>
 		</h2>
 	</div>
 
@@ -51,8 +51,10 @@
 					<td>${pacote.partida}</td>
 					<td>${pacote.duracao}</td>
 					<td>${pacote.valor}</td>
-					<c:forEach var="i" varStatus="i" begin="0" end="9" step="1">
-					<td><img src="${pacote.imagem[${i}].getLink}" width="50" height="50"></td>
+					<c:forEach var="imagem" items="${pacote.imagem}">
+						<c:forEach var="link" items="${imagem.link}">
+							<img src="${link}" width=50 height=50>
+						</c:forEach>
 					</c:forEach>
 					<td>${pacote.descricao}</td>
 					<td>${pacote.cnpj}</td>

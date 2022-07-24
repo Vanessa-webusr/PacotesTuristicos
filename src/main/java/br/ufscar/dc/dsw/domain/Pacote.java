@@ -7,6 +7,7 @@ public class Pacote {
 
     private Long id;
     private String cnpj;
+    private Long agencia_id;
     private String cidade;
     private String estado;
     private String pais;
@@ -20,7 +21,7 @@ public class Pacote {
         this.id = id;
     }
 
-    public Pacote(String cnpj, String cidade, String estado, String pais, String partida,
+    public Pacote(String cnpj, Long agencia_id, String cidade, String estado, String pais, String partida,
     String duracao, Float valor, Imagem[] imagem, String descricao) {
         this.cnpj = cnpj;
         this.cidade = cidade;
@@ -31,11 +32,12 @@ public class Pacote {
         this.valor = valor;
         this.imagem = imagem;
         this.descricao = descricao;
+        this.agencia_id = agencia_id;
     }
 
-    public Pacote(Long id, String cnpj, String cidade, String estado, String pais, String partida,
+    public Pacote(Long id, String cnpj, Long agencia_id, String cidade, String estado, String pais, String partida,
     String duracao, Float valor, Imagem[] imagem, String descricao) {
-        this(cnpj, cidade, estado, pais, partida, duracao, valor, imagem, descricao);
+        this(cnpj,agencia_id, cidade, estado, pais, partida, duracao, valor, imagem, descricao);
         this.id = id;
     }
 
@@ -117,6 +119,14 @@ public class Pacote {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public Long getAgenciaId(){
+        return agencia_id;
+    }
+
+    public void setAgenciaId(Long agencia_id){
+        this.agencia_id = agencia_id;
     }
 }
 

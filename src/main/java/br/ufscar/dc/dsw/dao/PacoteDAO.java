@@ -65,7 +65,7 @@ public class PacoteDAO extends GenericDAO{
                 ImagemDAO imagemDao = new ImagemDAO();
                 Imagem[] listaImagem = imagemDao.getPorPacote(id);
 
-                Pacote pacote = new Pacote(id, cnpj, cidade, estado, pais, partida, duracao, valor, listaImagem, descricao);
+                Pacote pacote = new Pacote(id, cnpj, agencia_id, cidade, estado, pais, partida, duracao, valor, listaImagem, descricao);
                 listaPacote.add(pacote);
             }
             resultSet.close();
@@ -103,7 +103,7 @@ public class PacoteDAO extends GenericDAO{
                 ImagemDAO imagemDao = new ImagemDAO();
                 Imagem[] listaImagem = imagemDao.getPorPacote(id);
 
-                Pacote pacote = new Pacote(id, cnpj, cidade, estado, pais, partida, duracao, valor, listaImagem, descricao);
+                Pacote pacote = new Pacote(id, cnpj, agencia_id, cidade, estado, pais, partida, duracao, valor, listaImagem, descricao);
                 listaPacote.add(pacote);
             }
             resultSet.close();
@@ -141,7 +141,7 @@ public class PacoteDAO extends GenericDAO{
             PreparedStatement statement = conn.prepareStatement(sql);
 
             statement.setString(1, pacote.getCnpj());
-            statement.setLong(2, 0); //EDITAR ***************************************************************************************************
+            statement.setLong(2, pacote.getAgenciaId()); //EDITAR ***************************************************************************************************
             statement.setString(3, pacote.getCidade());
             statement.setString(4, pacote.getEstado());
             statement.setString(5, pacote.getPais());
@@ -149,6 +149,7 @@ public class PacoteDAO extends GenericDAO{
             statement.setString(7, pacote.getDuracao());
             statement.setDouble(8, pacote.getValor());
             statement.setString(9, pacote.getDescricao());
+            statement.setLong(10, pacote.getId());
             statement.executeUpdate();
 
             statement.close();
@@ -184,7 +185,7 @@ public class PacoteDAO extends GenericDAO{
                 Imagem[] listaImagem = imagemDao.getPorPacote(id);
 
 
-                pacote = new Pacote(id, cnpj, cidade, estado, pais, partida, duracao, valor, listaImagem, descricao);
+                pacote = new Pacote(id, cnpj, agencia_id, cidade, estado, pais, partida, duracao, valor, listaImagem, descricao);
             }
 
             resultSet.close();

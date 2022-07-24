@@ -4,6 +4,7 @@ package br.ufscar.dc.dsw.controller;
  import br.ufscar.dc.dsw.dao.ClienteDAO;
  import br.ufscar.dc.dsw.dao.CompraDAO;
  import br.ufscar.dc.dsw.dao.PacoteDAO;
+ import br.ufscar.dc.dsw.dao.ImagemDAO;
  import br.ufscar.dc.dsw.domain.Agencia;
  import br.ufscar.dc.dsw.domain.Cliente;
  import br.ufscar.dc.dsw.domain.Compra;
@@ -31,6 +32,7 @@ import java.util.HashMap;
     private ClienteDAO clienteDao;
     private CompraDAO compraDao;
     private PacoteDAO pacoteDao;
+    private ImagemDAO imagemDao;
 
     @Override
     public void init() {
@@ -38,6 +40,7 @@ import java.util.HashMap;
         clienteDao = new ClienteDAO();
         compraDao = new CompraDAO();
         pacoteDao = new PacoteDAO();
+        imagemDao = new ImagemDAO();
     }
 
     @Override
@@ -287,7 +290,6 @@ import java.util.HashMap;
 
     private void apresentaFormCadastroPacote(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("pacote", getPacote());
         RequestDispatcher dispatcher = request.getRequestDispatcher("/views/fomularioPacote.jsp");
         dispatcher.forward(request, response);
     }
@@ -315,8 +317,10 @@ import java.util.HashMap;
         String descricao = request.getParameter("descricao");
         String[] listaLink = request.getParameterValues("imagem");
         Imagem[] listaImagem = {new Imagem()};
+
+        Long agencia_id = agenciaDao.getByCnpj(cnpj).getId();
         
-        Pacote pacote = new Pacote(cnpj, cidade, estado, pais, partida, duracao, valor, listaImagem, descricao);
+        Pacote pacote = new Pacote(cnpj, agencia_id, cidade, estado, pais, partida, duracao, valor, listaImagem, descricao);
         pacoteDao.insert(pacote, agenciaDao.getByCnpj(cnpj).getId());
 
         Long id = pacoteDao.getIdByCnpj(cnpj);
@@ -324,6 +328,7 @@ import java.util.HashMap;
         int i = 0;
         for(i = 0; i < 0; i++){
             listaImagem[i] = new Imagem(id, listaLink[i]);
+            imagemDao.insert(listaImagem[i]);
         }
         pacote.setImagem(listaImagem);
         pacoteDao.update(pacote);
@@ -350,9 +355,18 @@ import java.util.HashMap;
         int i = 0;
         for(i = 0; i < 0; i++){
             listaImagem[i] = new Imagem(id, listaLink[i]);
+            Long imagemId = imagemDao.idByPacoteLink(id, listaLink[i]);
+            if(imagemId != -1){
+                listaImagem[i].setId(imagemId);
+                imagemDao.update(listaImagem[i]);
+            } else {
+                imagemDao.insert(listaImagem[i]);
+            }
         }
+
+        Long agencia_id = agenciaDao.getByCnpj(cnpj).getId();
  
-        Pacote pacote = new Pacote(id, cnpj, cidade, estado, pais, partida, duracao, valor, listaImagem, descricao);
+        Pacote pacote = new Pacote(id, cnpj, agencia_id, cidade, estado, pais, partida, duracao, valor, listaImagem, descricao);
         pacoteDao.update(pacote);
         response.sendRedirect("listaPacote");
     }
