@@ -13,7 +13,7 @@
 	<div align="center">
 		<h1>Gerenciamento de Agencias</h1>
 		<h2>
-			<a href="listaAgencia">Lista de Agencia</a>
+			<a href="<%= contextPath%>/agencia/lista">Lista de Agencia</a>
 		</h2>
 	</div>
 	<div align="center">

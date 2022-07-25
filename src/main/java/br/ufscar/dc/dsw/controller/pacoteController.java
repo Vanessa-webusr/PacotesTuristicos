@@ -154,7 +154,7 @@ import java.util.HashMap;
             imagemDao.insert(imagem);
         }
         
-        response.sendRedirect("listaPacote");
+        response.sendRedirect("lista");
     }
 
     private void atualizaPacote(HttpServletRequest request, HttpServletResponse response)
@@ -190,7 +190,7 @@ import java.util.HashMap;
  
         Pacote pacote = new Pacote(id, cnpj, agencia_id, cidade, estado, pais, partida, duracao, valor, listaImagem, descricao);
         pacoteDao.update(pacote);
-        response.sendRedirect("listaPacote");
+        response.sendRedirect("lista");
     }
 
     private void removePacote(HttpServletRequest request, HttpServletResponse response)
@@ -199,7 +199,7 @@ import java.util.HashMap;
 
         Pacote pacote= new Pacote(id);
         pacoteDao.delete(pacote);
-        response.sendRedirect("listaPacote");
+        response.sendRedirect("lista");
     }
 
     private void erro(HttpServletRequest request, HttpServletResponse response)

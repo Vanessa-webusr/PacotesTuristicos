@@ -133,7 +133,7 @@ import java.util.HashMap;
  
         Cliente cliente = new Cliente(email, nome, senha, cpf, telefone, sexo, nascimento, admin);
         clienteDao.insert(cliente);
-        response.sendRedirect("listaCliente");
+        response.sendRedirect("lista");
     }
 
     private void atualiza(HttpServletRequest request, HttpServletResponse response)
@@ -152,7 +152,7 @@ import java.util.HashMap;
  
         Cliente cliente = new Cliente(id, email, nome, senha, cpf, telefone, sexo, nascimento, admin);
         clienteDao.update(cliente);
-        response.sendRedirect("listaCliente");
+        response.sendRedirect("lista");
     }
 
     private void remove(HttpServletRequest request, HttpServletResponse response)
@@ -161,7 +161,7 @@ import java.util.HashMap;
 
         Cliente cliente= new Cliente(id);
         clienteDao.delete(cliente);
-        response.sendRedirect("listaCliente");
+        response.sendRedirect("lista");
     }
 
     private void erro(HttpServletRequest request, HttpServletResponse response)

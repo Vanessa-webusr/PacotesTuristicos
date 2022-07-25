@@ -130,7 +130,7 @@ import java.util.HashMap;
  
         Agencia agencia = new Agencia(email, senha, cnpj, nome, descricao);
         agenciaDao.insert(agencia);
-        response.sendRedirect("listaAgencia");
+        response.sendRedirect("lista");
     }
 
     private void atualiza(HttpServletRequest request, HttpServletResponse response)
@@ -146,7 +146,7 @@ import java.util.HashMap;
         
         Agencia agencia = new Agencia(id, email, senha, cnpj, nome, descricao);
         agenciaDao.update(agencia);
-        response.sendRedirect("listaAgencia");
+        response.sendRedirect("lista");
     }
 
     private void remove(HttpServletRequest request, HttpServletResponse response)
@@ -155,7 +155,7 @@ import java.util.HashMap;
 
         Agencia agencia = new Agencia(id);
         agenciaDao.delete(agencia);
-        response.sendRedirect("listaAgencia");
+        response.sendRedirect("lista");
     }
 
     private void erro(HttpServletRequest request, HttpServletResponse response)
