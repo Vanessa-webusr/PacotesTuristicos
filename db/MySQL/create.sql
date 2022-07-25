@@ -68,3 +68,4 @@ insert into Pacote(cnpj, agencia_id, cidade, estado, pais, data_partida, duracao
 insert into Foto(pacote_id, imagem) values(1, 'https://s2.glbimg.com/Mqwvldscd_dduyARe-XIyHiMkDw=/0x0:620x465/984x0/smart/filters:strip_icc()/s.glbimg.com/jo/g1/f/original/2015/09/09/prefeitura_sao_carlos_final_1.jpg');
 
 insert into Compra(pacote_id, pessoa_id, valor) values(1, 1, 1000.0);    
+    
