@@ -1,0 +1,12 @@
+/home/matheus/ufscar/dsw1/Trabalho 1/PacotesTuristicos/src/main/java/br/ufscar/dc/dsw/domain/Agencia.java
+/home/matheus/ufscar/dsw1/Trabalho 1/PacotesTuristicos/src/main/java/br/ufscar/dc/dsw/dao/ClienteDAO.java
+/home/matheus/ufscar/dsw1/Trabalho 1/PacotesTuristicos/src/main/java/br/ufscar/dc/dsw/dao/CompraDAO.java
+/home/matheus/ufscar/dsw1/Trabalho 1/PacotesTuristicos/src/main/java/br/ufscar/dc/dsw/dao/GenericDAO.java
+/home/matheus/ufscar/dsw1/Trabalho 1/PacotesTuristicos/src/main/java/br/ufscar/dc/dsw/domain/Imagem.java
+/home/matheus/ufscar/dsw1/Trabalho 1/PacotesTuristicos/src/main/java/br/ufscar/dc/dsw/dao/AgenciaDAO.java
+/home/matheus/ufscar/dsw1/Trabalho 1/PacotesTuristicos/src/main/java/br/ufscar/dc/dsw/dao/PacoteDAO.java
+/home/matheus/ufscar/dsw1/Trabalho 1/PacotesTuristicos/src/main/java/br/ufscar/dc/dsw/domain/Cliente.java
+/home/matheus/ufscar/dsw1/Trabalho 1/PacotesTuristicos/src/main/java/br/ufscar/dc/dsw/dao/ImagemDAO.java
+/home/matheus/ufscar/dsw1/Trabalho 1/PacotesTuristicos/src/main/java/br/ufscar/dc/dsw/controller/apiController.java
+/home/matheus/ufscar/dsw1/Trabalho 1/PacotesTuristicos/src/main/java/br/ufscar/dc/dsw/domain/Compra.java
+/home/matheus/ufscar/dsw1/Trabalho 1/PacotesTuristicos/src/main/java/br/ufscar/dc/dsw/domain/Pacote.java
