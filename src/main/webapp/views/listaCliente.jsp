@@ -14,7 +14,7 @@
 		<h1>Gerenciamento de Cliente</h1>
 		<h2>
 			<a href="/<%=contextPath%>">Menu Principal</a> &nbsp;&nbsp;&nbsp; <a
-				href="/<%= contextPath%>/api/cadastroCliente">Adicione Novo Cliente</a>
+				href="/<%= contextPath%>/cliente/cadastro">Adicione Novo Cliente</a>
 		</h2>
 	</div>
 
@@ -41,9 +41,9 @@
 					<td>${cliente.telefone}</td>
                     <td>${cliente.sexo}</td>
                     <td>${cliente.nascimento}</td>
-					<td><a href="/<%= contextPath%>/api/edicaoCliente?id=${cliente.id}">Edição</a>
+					<td><a href="/<%= contextPath%>/cliente/edicao?id=${cliente.id}">Edição</a>
 						&nbsp;&nbsp;&nbsp;&nbsp; <a
-						href="/<%= contextPath%>/api/removeCliente?id=${cliente.id}"
+						href="/<%= contextPath%>/cliente/remove?id=${cliente.id}"
 						onclick="return confirm('Tem certeza de que deseja excluir este item?');">
 							Remoção </a></td>
 				</tr>

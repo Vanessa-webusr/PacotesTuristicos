@@ -20,12 +20,12 @@
 		<c:choose>
 			<c:when test="${cliente != null}">
 				<h1>Atualizando</h1>
-				<form action="atualizaCliente" method="post">
+				<form action="atualiza" method="post">
 					<%@include file="camposCliente.jsp"%>
 				</form>
 			</c:when>
 			<c:otherwise>
-				<form action="insereCliente" method="post">
+				<form action="insere" method="post">
 					<%@include file="camposCliente.jsp"%>
 				</form>
 			</c:otherwise>

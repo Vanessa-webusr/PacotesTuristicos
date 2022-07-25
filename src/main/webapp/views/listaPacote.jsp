@@ -7,13 +7,13 @@
 <title>Lista de Pacotes de Viagem</title>
 </head>
 <body>
-	
+
 	<%@include file="cabecalho.jsp"%>
 	<div align="center">
 		<h1>Gerenciamento de Pacote de Viagens</h1>
 		<h2>
 			<a href="/<%=contextPath%>">Menu Principal</a> &nbsp;&nbsp;&nbsp; <a
-				href="/<%= contextPath%>/api/cadastroPacote">Adicione Novo Pacote</a>
+				href="/<%= contextPath%>/pacote/cadastro">Adicione Novo Pacote</a>
 		</h2>
 	</div>
 
@@ -57,9 +57,9 @@
 					</c:forEach>
 					<td>${pacote.descricao}</td>
 					<td>${pacote.cnpj}</td>
-					<td><a href="/<%= contextPath%>/api/edicaoPacote?id=${pacote.id}">Edição</a>
+					<td><a href="/<%= contextPath%>/pacote/edicao?id=${pacote.id}">Edição</a>
 						&nbsp;&nbsp;&nbsp;&nbsp; <a
-						href="/<%= contextPath%>/api/removePacote?id=${pacote.id}"
+						href="/<%= contextPath%>/pacote/remove?id=${pacote.id}"
 						onclick="return confirm('Tem certeza de que deseja excluir este item?');">
 							Remoção </a></td>
 				</tr>

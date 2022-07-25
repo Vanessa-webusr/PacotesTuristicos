@@ -19,12 +19,12 @@
 	<div align="center">
 		<c:choose>
 			<c:when test="${pacote != null}">
-				<form action="atualizaPacote" method="post">
+				<form action="atualiza" method="post">
 					<%@include file="camposPacote.jsp"%>
 				</form>
 			</c:when>
 			<c:otherwise>
-				<form action="inserePacote" method="post">
+				<form action="insere" method="post">
 					<%@include file="camposPacote.jsp"%>
 				</form>
 			</c:otherwise>

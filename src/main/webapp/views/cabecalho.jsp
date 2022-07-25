@@ -9,9 +9,9 @@
 <table>
     <tr>
         <td>
-            <a href="/<%= contextPath%>/api/listaPacote">Lista de Pacotes</a>
-            <a href="/<%= contextPath%>/api/listaAgencia">Lista de Agencias</a>
-            <a href="/<%= contextPath%>/api/listaCliente">Lista de Clientes</a>
+            <a href="/<%= contextPath%>/pacote/lista">Lista de Pacotes</a>
+            <a href="/<%= contextPath%>/agencia/lista">Lista de Agencias</a>
+            <a href="/<%= contextPath%>/cliente/lista">Lista de Clientes</a>
         </td>
     </tr>
 </table>

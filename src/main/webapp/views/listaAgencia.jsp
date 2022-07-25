@@ -13,7 +13,7 @@
 		<h1>Gerenciamento de Pacote de Agencia</h1>
 		<h2>
 			<a href="/<%=contextPath%>">Menu Principal</a> &nbsp;&nbsp;&nbsp; <a
-				href="/<%= contextPath%>/api/cadastroAgencia">Adicione Nova Agencia</a>
+				href="/<%= contextPath%>/agencia/cadastro">Adicione Nova Agencia</a>
 		</h2>
 	</div>
 
@@ -36,9 +36,9 @@
 					<td>${agencia.cnpj}</td>
 					<td>${agencia.nome}</td>
 					<td>${agencia.descricao}</td>
-					<td><a href="/<%= contextPath%>/api/edicaoAgencia?id=${agencia.id}">Edição</a>
+					<td><a href="/<%= contextPath%>/agencia/edicao?id=${agencia.id}">Edição</a>
 						&nbsp;&nbsp;&nbsp;&nbsp; <a
-						href="/<%= contextPath%>/api/removeAgencia?id=${agencia.id}"
+						href="/<%= contextPath%>/agencia/remove?id=${agencia.id}"
 						onclick="return confirm('Tem certeza de que deseja excluir este item?');">
 							Remoção </a></td>
 				</tr>
