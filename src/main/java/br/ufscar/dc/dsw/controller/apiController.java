@@ -133,7 +133,7 @@ import java.util.HashMap;
     private Map<Long, String> getAgencia() {
         Map <Long,String> agencias = new HashMap<>();
         for (Agencia agencia: new AgenciaDAO().getAll()) {
-            agencias.put(agencia.getId(), agencia.getNome());
+            agencias.put(agencia.getId(), agencia.getCnpj());
         }
         return agencias;
     }
@@ -141,7 +141,7 @@ import java.util.HashMap;
     private void apresentaFormCadastroAgencia(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setAttribute("agencias", getAgencia());
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/fomularioAgencia.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/formularioAgencia.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -212,8 +212,8 @@ import java.util.HashMap;
 
     private void apresentaFormCadastroCliente(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("cliente", getCliente());
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/fomularioCliente.jsp");
+        request.setAttribute("clientes", getCliente());
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/formularioCliente.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -290,14 +290,16 @@ import java.util.HashMap;
 
     private void apresentaFormCadastroPacote(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/fomularioPacote.jsp");
+        request.setAttribute("agencias", getAgencia());       
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/formularioPacote.jsp");
         dispatcher.forward(request, response);
     }
 
     private void apresentaFormEdicaoPacote(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Long id = Long.parseLong(request.getParameter("id"));
-        Pacote pacote = pacoteDao.get(id);
+        Pacote pacote = pacoteDao.get(id); 
+        request.setAttribute("agencias", getAgencia()); 
         request.setAttribute("pacote", pacote);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/views/formularioPacote.jsp");
         dispatcher.forward(request, response);
@@ -320,18 +322,16 @@ import java.util.HashMap;
 
         Long agencia_id = agenciaDao.getByCnpj(cnpj).getId();
         
+        
         Pacote pacote = new Pacote(cnpj, agencia_id, cidade, estado, pais, partida, duracao, valor, listaImagem, descricao);
         pacoteDao.insert(pacote, agenciaDao.getByCnpj(cnpj).getId());
 
-        Long id = pacoteDao.getIdByCnpj(cnpj);
-
-        int i = 0;
-        for(i = 0; i < 0; i++){
-            listaImagem[i] = new Imagem(id, listaLink[i]);
-            imagemDao.insert(listaImagem[i]);
+        Long id = pacoteDao.getMaxId();
+        for (String link: listaLink) {
+            Imagem imagem = new Imagem(id, link);
+            imagemDao.insert(imagem);
         }
-        pacote.setImagem(listaImagem);
-        pacoteDao.update(pacote);
+        
         response.sendRedirect("listaPacote");
     }
 
