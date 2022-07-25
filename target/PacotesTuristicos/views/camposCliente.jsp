@@ -33,7 +33,7 @@
 			min="0" value="${cliente.cpf}" /></td>
 	</tr>
 	<tr>
-		<td><label for="nome">E-mail</label></td>
+		<td><label for="nome">Nome</label></td>
 		<td><input type="text" id="nome" name="nome" size="45"
 			required value="${cliente.email}" /></td>
 	</tr>
@@ -58,6 +58,15 @@
         <td><input type="date" id="nascimento" name="nascimento" required
         value="${cliente}"></td>
     </tr>
+	<tr>
+		<th>Administrador</th>
+		<td><label for="nao">Não</label></td>
+		<td><input type="radio" id="nao" name="admin"
+            value="0" /></td>
+        <td><label for="sim">Sim</label></td>
+		<td><input type="radio" id="sim" name="admin"
+            value="1" /></td>
+	</tr>
 	<tr>
 		<td colspan="2" align="center"><input type="submit" value="Salva" /></td>
 	</tr>

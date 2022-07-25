@@ -7,14 +7,14 @@
 <title>Lista de Clientes</title>
 </head>
 <body>
-	<%
-		String contextPath = request.getContextPath().replace("/", "");
-	%>
+
+
+	<%@include file="cabecalho.jsp"%>
 	<div align="center">
-		<h1>Gerenciamento de Clientes</h1>
+		<h1>Gerenciamento de Cliente</h1>
 		<h2>
 			<a href="/<%=contextPath%>">Menu Principal</a> &nbsp;&nbsp;&nbsp; <a
-				href="/<%=contextPath%>/cliente/cadastro">Adicione Novo Cliente</a>
+				href="/<%= contextPath%>/api/cadastroCliente">Adicione Novo Cliente</a>
 		</h2>
 	</div>
 
@@ -31,19 +31,19 @@
 				<th>Sexo</th>
                 <th>Data de nascimento</th>
 			</tr>
-			<c:forEach var="cliente" items="${requestScope.listaLivros}">
+			<c:forEach var="cliente" items="${requestScope.listaCliente}">
 				<tr>
-					<td>${}</td>
-					<td>${}</td>
-					<td>${}</td>
-					<td>${}</td>
-					<td>${}</td>
-					<td>${}</td>
-                    <td>${}</td>
-                    <td>${}</td>
-					<td><a href="/<%= contextPath%>/livros/edicao?id=${livro.id}">Edição</a>
+					<td>${cliente.id}</td>
+					<td>${cliente.email}</td>
+					<td>${cliente.senha}</td>
+					<td>${cliente.cpf}</td>
+					<td>${cliente.nome}</td>
+					<td>${cliente.telefone}</td>
+                    <td>${cliente.sexo}</td>
+                    <td>${cliente.nascimento}</td>
+					<td><a href="/<%= contextPath%>/api/edicaoCliente?id=${cliente.id}">Edição</a>
 						&nbsp;&nbsp;&nbsp;&nbsp; <a
-						href="/<%= contextPath%>/livros/remocao?id=${livro.id}"
+						href="/<%= contextPath%>/api/removeCliente?id=${cliente.id}"
 						onclick="return confirm('Tem certeza de que deseja excluir este item?');">
 							Remoção </a></td>
 				</tr>

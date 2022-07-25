@@ -52,7 +52,7 @@ public class ClienteDAO extends GenericDAO {
                 String nome = resultSet.getString("nome");
                 String telefone = resultSet.getString("telefone");
                 String sexo = resultSet.getString("sexo");
-                String nascimento  = resultSet.getString("nascimento");
+                String nascimento  = resultSet.getString("data_nascimento");
                 String email = resultSet.getString("email");
                 String senha = resultSet.getString("senha");
                 int admin = resultSet.getInt("cliente_admin");
@@ -70,7 +70,7 @@ public class ClienteDAO extends GenericDAO {
     }
 
     public void delete(Cliente cliente) {
-        String sql = "DELETE FROM Cliente where id = ?";
+        String sql = "DELETE FROM Pessoa where id = ?";
 
         try {
             Connection conn = this.getConnection();
@@ -102,6 +102,7 @@ public class ClienteDAO extends GenericDAO {
             statement.setString(6, cliente.getEmail());
             statement.setString(7, cliente.getSenha());
             statement.setInt(8, cliente.getAdmin());
+            statement.setLong(9, cliente.getId());
             statement.executeUpdate();
 
             statement.close();

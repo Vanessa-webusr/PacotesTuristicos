@@ -197,19 +197,19 @@ public class PacoteDAO extends GenericDAO{
         return pacote;
     }
 
-    public Long getIdByCnpj(String cnpj) {
+    public Long getMaxId() {
         Long id = null;
 
-        String sql = "SELECT * from Pacote where cnpj = ? ";
+        String sql = "SELECT MAX(id) from Pacote;";
 
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            statement.setString(1, cnpj);
+
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                id = resultSet.getLong("id");
+                id = resultSet.getLong("MAX(id)");
             }
 
             resultSet.close();

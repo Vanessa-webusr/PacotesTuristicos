@@ -94,6 +94,7 @@ public class AgenciaDAO extends GenericDAO {
             statement.setString(3, agencia.getSenha());
             statement.setString(4, agencia.getNome());
             statement.setString(5, agencia.getDescricao());
+            statement.setLong(6, agencia.getId());
             
             statement.executeUpdate();
 

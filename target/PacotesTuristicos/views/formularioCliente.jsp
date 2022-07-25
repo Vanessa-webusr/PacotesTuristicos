@@ -9,21 +9,23 @@
 </head>
 
 <body>
+	<%@include file="cabecalho.jsp"%>
 	<div align="center">
 		<h1>Gerenciamento de Cliente</h1>
 		<h2>
-			<a href="listaCliente">Lista de Clientes</a>
+			<a href="listaCliente.jsp">Lista de Clientes</a>
 		</h2>
 	</div>
 	<div align="center">
 		<c:choose>
 			<c:when test="${cliente != null}">
-				<form action="atualizacao" method="post">
+				<h1>Atualizando</h1>
+				<form action="atualizaCliente" method="post">
 					<%@include file="camposCliente.jsp"%>
 				</form>
 			</c:when>
 			<c:otherwise>
-				<form action="insercao" method="post">
+				<form action="insereCliente" method="post">
 					<%@include file="camposCliente.jsp"%>
 				</form>
 			</c:otherwise>

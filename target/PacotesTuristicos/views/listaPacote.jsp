@@ -7,14 +7,13 @@
 <title>Lista de Pacotes de Viagem</title>
 </head>
 <body>
-	<%
-		String contextPath = request.getContextPath().replace("/", "");
-	%>
+	
+	<%@include file="cabecalho.jsp"%>
 	<div align="center">
 		<h1>Gerenciamento de Pacote de Viagens</h1>
 		<h2>
 			<a href="/<%=contextPath%>">Menu Principal</a> &nbsp;&nbsp;&nbsp; <a
-				href="//<%= contextPath%>/api/cadastroPacote">Adicione Novo Pacote</a>
+				href="/<%= contextPath%>/api/cadastroPacote">Adicione Novo Pacote</a>
 		</h2>
 	</div>
 
@@ -53,7 +52,7 @@
 					<td>${pacote.valor}</td>
 					<c:forEach var="imagem" items="${pacote.imagem}">
 						<c:forEach var="link" items="${imagem.link}">
-							<img src="${link}" width=50 height=50>
+							<td><img src="${link}" width=50 height=50></td>
 						</c:forEach>
 					</c:forEach>
 					<td>${pacote.descricao}</td>

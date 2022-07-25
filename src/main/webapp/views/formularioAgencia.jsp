@@ -9,6 +9,7 @@
 </head>
 
 <body>
+	<%@include file="cabecalho.jsp"%>
 	<div align="center">
 		<h1>Gerenciamento de Agencias</h1>
 		<h2>
@@ -18,12 +19,12 @@
 	<div align="center">
 		<c:choose>
 			<c:when test="${agencia != null}">
-				<form action="atualizacao" method="post">
+				<form action="atualizaAgencia" method="post">
 					<%@include file="camposAgencia.jsp"%>
 				</form>
 			</c:when>
 			<c:otherwise>
-				<form action="insercao" method="post">
+				<form action="insereAgencia" method="post">
 					<%@include file="camposAgencia.jsp"%>
 				</form>
 			</c:otherwise>

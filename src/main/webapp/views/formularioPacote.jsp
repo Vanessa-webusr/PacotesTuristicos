@@ -9,6 +9,7 @@
     <title>Cadastro de Pacotes</title>
 </head>
 <body>
+	<%@include file="cabecalho.jsp"%>
 	<div align="center">
 		<h1>Gerenciamento de Pacotes de Viagem</h1>
 		<h2>
