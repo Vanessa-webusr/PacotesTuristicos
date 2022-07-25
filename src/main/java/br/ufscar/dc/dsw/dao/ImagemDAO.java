@@ -34,7 +34,7 @@ public class ImagemDAO extends GenericDAO{
     public Imagem[] getPorPacote(Long pacote_id){
 
         String sql = "SELECT * FROM Foto WHERE pacote_id = ?";
-        Imagem[] listaImagem = {new Imagem()};
+        Imagem[] listaImagem = new Imagem[10];
         try{
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);

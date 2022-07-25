@@ -322,7 +322,7 @@ import java.util.HashMap;
 
         Long agencia_id = agenciaDao.getByCnpj(cnpj).getId();
         
-        
+
         Pacote pacote = new Pacote(cnpj, agencia_id, cidade, estado, pais, partida, duracao, valor, listaImagem, descricao);
         pacoteDao.insert(pacote, agenciaDao.getByCnpj(cnpj).getId());
 
@@ -351,7 +351,7 @@ import java.util.HashMap;
 
         String[] listaLink = request.getParameterValues("imagem");
         Imagem[] listaImagem = {new Imagem()};
-        
+
         int i = 0;
         for(i = 0; i < 0; i++){
             listaImagem[i] = new Imagem(id, listaLink[i]);
