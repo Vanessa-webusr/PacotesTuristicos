@@ -14,7 +14,7 @@ import br.ufscar.dc.dsw.domain.Pacote;
 public class ImagemDAO extends GenericDAO{
 
     public void insert(Imagem imagem) {
-        String sql = "INSERT INTO Pacote (pacote_id, imagem)";
+        String sql = "INSERT INTO Foto (pacote_id, imagem)";
         sql += "VALUES (?, ?)";
 
         try {

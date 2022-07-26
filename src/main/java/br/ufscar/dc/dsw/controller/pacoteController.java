@@ -10,6 +10,7 @@ package br.ufscar.dc.dsw.controller;
  import br.ufscar.dc.dsw.domain.Compra;
  import br.ufscar.dc.dsw.domain.Pacote;
  import br.ufscar.dc.dsw.domain.Imagem;
+ import br.ufscar.dc.dsw.util.Erro;
 
  import java.io.IOException;
 import java.util.Arrays;
@@ -61,22 +62,27 @@ import java.util.HashMap;
         try {
             switch(action){
                 case "/cadastro":
-                    apresentaFormCadastroPacote(request, response);
+                    autorizacao(request, response);
+                    apresentaFormCadastro(request, response);
                     break;
                 case "/edicao":
-                    apresentaFormEdicaoPacote(request, response);
+                    autorizacao(request, response);
+                    apresentaFormEdicao(request, response);
                     break;
                 case "/insere":
-                    inserePacote(request, response);
+                    autorizacao(request, response);
+                    insere(request, response);
                     break;
                 case "/remove":
-                    removePacote(request, response);
+                    autorizacao(request, response);
+                    remove(request, response);
                     break;
                 case "/atualiza":
-                    atualizaPacote(request, response);
+                    autorizacao(request, response);
+                    atualiza(request, response);
                     break; 
                 case "/lista":
-                    listaPacote(request, response);
+                    lista(request, response);
                     break;
                 default:
                     erro(request, response);
@@ -94,7 +100,7 @@ import java.util.HashMap;
         return agencias;
     }
 
-    private void listaPacote(HttpServletRequest request, HttpServletResponse response)
+    private void lista(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
         List<Pacote> listaPacote = pacoteDao.getAll();
         request.setAttribute("listaPacote", listaPacote);
@@ -110,14 +116,14 @@ import java.util.HashMap;
         return pacotes;
     }
 
-    private void apresentaFormCadastroPacote(HttpServletRequest request, HttpServletResponse response)
+    private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setAttribute("agencias", getAgencia());       
         RequestDispatcher dispatcher = request.getRequestDispatcher("/views/formularioPacote.jsp");
         dispatcher.forward(request, response);
     }
 
-    private void apresentaFormEdicaoPacote(HttpServletRequest request, HttpServletResponse response)
+    private void apresentaFormEdicao(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Long id = Long.parseLong(request.getParameter("id"));
         Pacote pacote = pacoteDao.get(id); 
@@ -127,7 +133,7 @@ import java.util.HashMap;
         dispatcher.forward(request, response);
     }
 
-    private void inserePacote(HttpServletRequest request, HttpServletResponse response)
+    private void insere(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         
@@ -139,7 +145,7 @@ import java.util.HashMap;
         String duracao = request.getParameter("duracao");
         Float valor = Float.parseFloat(request.getParameter("valor"));
         String descricao = request.getParameter("descricao");
-        String[] listaLink = request.getParameterValues("imagem");
+        String[] listaLink = request.getParameterValues("imagem[]");
         Imagem[] listaImagem = {new Imagem()};
 
         Long agencia_id = agenciaDao.getByCnpj(cnpj).getId();
@@ -149,15 +155,16 @@ import java.util.HashMap;
         pacoteDao.insert(pacote, agenciaDao.getByCnpj(cnpj).getId());
 
         Long id = pacoteDao.getMaxId();
-        for (String link: listaLink) {
-            Imagem imagem = new Imagem(id, link);
+        int length = listaLink.length;
+        for (int i = 0; i < length; i++) {
+            Imagem imagem = new Imagem(id, listaLink[i]);
             imagemDao.insert(imagem);
         }
         
         response.sendRedirect("lista");
     }
 
-    private void atualizaPacote(HttpServletRequest request, HttpServletResponse response)
+    private void atualiza(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
@@ -171,7 +178,7 @@ import java.util.HashMap;
         Float valor = Float.parseFloat(request.getParameter("valor"));
         String descricao = request.getParameter("descricao");
 
-        String[] listaLink = request.getParameterValues("imagem");
+        String[] listaLink = request.getParameterValues("imagem[]");
         Imagem[] listaImagem = {new Imagem()};
 
         int i = 0;
@@ -193,7 +200,7 @@ import java.util.HashMap;
         response.sendRedirect("lista");
     }
 
-    private void removePacote(HttpServletRequest request, HttpServletResponse response)
+    private void remove(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         Long id = Long.parseLong(request.getParameter("id"));
 
@@ -206,5 +213,22 @@ import java.util.HashMap;
       throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/views/authError.jsp");
         dispatcher.forward(request, response);
+    }
+
+    private void autorizacao(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+        Cliente usuario = (Cliente) request.getSession().getAttribute("usuarioLogado");
+        if (usuario == null) {
+            response.sendRedirect("../views/login.jsp");
+            return;
+        }
+        if (usuario.getAdmin() == 0) {
+            Erro erro = new Erro();
+            erro.add("Você não tem permissão para acessar esta página.");
+            request.setAttribute("mensagens", erro);
+            RequestDispatcher rd = request.getRequestDispatcher("/views/error.jsp");
+            rd.forward(request, response);
+            return;
+        }
     }
 }

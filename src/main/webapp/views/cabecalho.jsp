@@ -9,6 +9,7 @@
 <table>
     <tr>
         <td>
+            <a href="/<%= contextPath%>/views/login.jsp">Login</a>
             <a href="/<%= contextPath%>/pacote/lista">Lista de Pacotes</a>
             <a href="/<%= contextPath%>/agencia/lista">Lista de Agencias</a>
             <a href="/<%= contextPath%>/cliente/lista">Lista de Clientes</a>

@@ -10,6 +10,7 @@ package br.ufscar.dc.dsw.controller;
  import br.ufscar.dc.dsw.domain.Compra;
  import br.ufscar.dc.dsw.domain.Pacote;
  import br.ufscar.dc.dsw.domain.Imagem;
+ import br.ufscar.dc.dsw.util.Erro;
 
  import java.io.IOException;
 import java.util.Arrays;
@@ -56,6 +57,20 @@ import java.util.HashMap;
         String action = request.getPathInfo();
         if (action == null) {
             action = "";
+        }
+
+        Cliente usuario = (Cliente) request.getSession().getAttribute("usuarioLogado");
+        if (usuario == null) {
+            response.sendRedirect("../views/login.jsp");
+            return;
+        }
+        if (usuario.getAdmin() == 0) {
+            Erro erro = new Erro();
+            erro.add("Você não tem permissão para acessar esta página.");
+            request.setAttribute("mensagens", erro);
+            RequestDispatcher rd = request.getRequestDispatcher("/views/error.jsp");
+            rd.forward(request, response);
+            return;
         }
 
         try {

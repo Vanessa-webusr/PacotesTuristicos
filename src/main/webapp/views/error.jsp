@@ -5,11 +5,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Autorização de Usuário</title>
+        <title>Erro encontrado</title>
         <link href="${pageContext.request.contextPath}/layout.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <h1>Autorização de Usuário</h1>
+        <h1>Erro encontrado</h1>
         <c:if test="${mensagens.existeErros}">
             <div id="erro">
                 <ul>
