@@ -21,6 +21,7 @@
 		<table border="1">
 			<caption>Lista de Agencia</caption>
 			<tr>
+				<th>Ações</th>
 				<th>ID</th>
 				<th>E-mail</th>
 				<th>Senha</th>
@@ -30,17 +31,17 @@
 			</tr>
 			<c:forEach var="agencia" items="${requestScope.listaAgencia}">
 				<tr>
+					<td><a href="/<%= contextPath%>/agencia/edicao?id=${agencia.id}">Edição</a>
+						&nbsp;&nbsp;&nbsp;&nbsp; <a
+						href="/<%= contextPath%>/agencia/remove?id=${agencia.id}"
+						onclick="return confirm('Tem certeza de que deseja excluir este item?');">
+							Remoção </a></td>
 					<td>${agencia.id}</td>
 					<td>${agencia.email}</td>
 					<td>${agencia.senha}</td>
 					<td>${agencia.cnpj}</td>
 					<td>${agencia.nome}</td>
 					<td>${agencia.descricao}</td>
-					<td><a href="/<%= contextPath%>/agencia/edicao?id=${agencia.id}">Edição</a>
-						&nbsp;&nbsp;&nbsp;&nbsp; <a
-						href="/<%= contextPath%>/agencia/remove?id=${agencia.id}"
-						onclick="return confirm('Tem certeza de que deseja excluir este item?');">
-							Remoção </a></td>
 				</tr>
 			</c:forEach>
 		</table>

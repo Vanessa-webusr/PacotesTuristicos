@@ -22,6 +22,7 @@
 		<table border="1">
 			<caption>Lista de Clientes</caption>
 			<tr>
+				<th>Açôes</th>
 				<th>ID</th>
 				<th>E-mail</th>
 				<th>Senha</th>
@@ -33,6 +34,11 @@
 			</tr>
 			<c:forEach var="cliente" items="${requestScope.listaCliente}">
 				<tr>
+					<td><a href="/<%= contextPath%>/cliente/edicao?id=${cliente.id}">Edição</a>
+						&nbsp;&nbsp;&nbsp;&nbsp; <a
+						href="/<%= contextPath%>/cliente/remove?id=${cliente.id}"
+						onclick="return confirm('Tem certeza de que deseja excluir este item?');">
+							Remoção </a></td>
 					<td>${cliente.id}</td>
 					<td>${cliente.email}</td>
 					<td>${cliente.senha}</td>
@@ -41,11 +47,6 @@
 					<td>${cliente.telefone}</td>
                     <td>${cliente.sexo}</td>
                     <td>${cliente.nascimento}</td>
-					<td><a href="/<%= contextPath%>/cliente/edicao?id=${cliente.id}">Edição</a>
-						&nbsp;&nbsp;&nbsp;&nbsp; <a
-						href="/<%= contextPath%>/cliente/remove?id=${cliente.id}"
-						onclick="return confirm('Tem certeza de que deseja excluir este item?');">
-							Remoção </a></td>
 				</tr>
 			</c:forEach>
 		</table>

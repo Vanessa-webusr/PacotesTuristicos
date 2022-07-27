@@ -21,8 +21,15 @@
                 </ul>
             </div>
         </c:if>
-        <form method="post" action="/<%= contextPath%>/auth">
+        <form method="post" action="/<%= contextPath%>/auth/login">
             <table>
+                <tr>
+                    <td><label for="cliente">Cliente</label></td>
+                    <td><input type="radio" id="cliente" name="tipo"
+                        value="Cliente" checked/></td>
+                    <td><label for="agencia">Agência</label></td>
+                    <td><input type="radio" id="agencia" name="tipo"
+                        value="Agencia" /></td></tr>
                 <tr>
                     <th>Login: </th>
                     <td><input type="text" name="email"/></td>

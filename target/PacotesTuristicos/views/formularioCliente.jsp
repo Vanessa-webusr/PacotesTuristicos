@@ -13,19 +13,19 @@
 	<div align="center">
 		<h1>Gerenciamento de Cliente</h1>
 		<h2>
-			<a href="listaCliente.jsp">Lista de Clientes</a>
+			<a href="<%= contextPath%>/cliente/lista">Lista de Clientes</a>
 		</h2>
 	</div>
 	<div align="center">
 		<c:choose>
 			<c:when test="${cliente != null}">
 				<h1>Atualizando</h1>
-				<form action="atualizaCliente" method="post">
+				<form action="atualiza" method="post">
 					<%@include file="camposCliente.jsp"%>
 				</form>
 			</c:when>
 			<c:otherwise>
-				<form action="insereCliente" method="post">
+				<form action="insere" method="post">
 					<%@include file="camposCliente.jsp"%>
 				</form>
 			</c:otherwise>

@@ -13,18 +13,18 @@
 	<div align="center">
 		<h1>Gerenciamento de Agencias</h1>
 		<h2>
-			<a href="listaAgencia">Lista de Agencia</a>
+			<a href="<%= contextPath%>/agencia/lista">Lista de Agencia</a>
 		</h2>
 	</div>
 	<div align="center">
 		<c:choose>
 			<c:when test="${agencia != null}">
-				<form action="atualizaAgencia" method="post">
+				<form action="atualiza" method="post">
 					<%@include file="camposAgencia.jsp"%>
 				</form>
 			</c:when>
 			<c:otherwise>
-				<form action="insereAgencia" method="post">
+				<form action="insere" method="post">
 					<%@include file="camposAgencia.jsp"%>
 				</form>
 			</c:otherwise>

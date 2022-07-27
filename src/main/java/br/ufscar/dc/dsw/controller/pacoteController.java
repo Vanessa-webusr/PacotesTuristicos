@@ -8,8 +8,10 @@ package br.ufscar.dc.dsw.controller;
  import br.ufscar.dc.dsw.domain.Agencia;
  import br.ufscar.dc.dsw.domain.Cliente;
  import br.ufscar.dc.dsw.domain.Compra;
+ import br.ufscar.dc.dsw.domain.Login;
  import br.ufscar.dc.dsw.domain.Pacote;
  import br.ufscar.dc.dsw.domain.Imagem;
+ import br.ufscar.dc.dsw.domain.Login;
  import br.ufscar.dc.dsw.util.Erro;
 
  import java.io.IOException;
@@ -59,6 +61,9 @@ import java.util.HashMap;
             action = "";
         }
 
+        Login usuario = (Login) request.getSession().getAttribute("usuarioLogado");
+        request.setAttribute("usuario", usuario);
+
         try {
             switch(action){
                 case "/cadastro":
@@ -84,6 +89,9 @@ import java.util.HashMap;
                 case "/lista":
                     lista(request, response);
                     break;
+                case "/listaPorAgencia":
+                    listaPorAgencia(request, response);
+                    break;
                 default:
                     erro(request, response);
             }
@@ -104,6 +112,16 @@ import java.util.HashMap;
       throws ServletException, IOException {
         List<Pacote> listaPacote = pacoteDao.getAll();
         request.setAttribute("listaPacote", listaPacote);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/listaPacote.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void listaPorAgencia(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+        Login usuario = (Login) request.getSession().getAttribute("usuarioLogado");
+        List<Pacote> listaPacote = pacoteDao.getPorAgencia(usuario.getAgencia().getId());   
+        request.setAttribute("listaPacote", listaPacote);
+        request.setAttribute("filtrado", true);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/views/listaPacote.jsp");
         dispatcher.forward(request, response);
     }
@@ -137,6 +155,7 @@ import java.util.HashMap;
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         
+        Long agencia_id = Long.parseLong(request.getParameter("agencia_id"));
         String cnpj = request.getParameter("cnpj");
         String cidade = request.getParameter("cidade");
         String estado = request.getParameter("estado");
@@ -148,7 +167,6 @@ import java.util.HashMap;
         String[] listaLink = request.getParameterValues("imagem[]");
         Imagem[] listaImagem = {new Imagem()};
 
-        Long agencia_id = agenciaDao.getByCnpj(cnpj).getId();
         
 
         Pacote pacote = new Pacote(cnpj, agencia_id, cidade, estado, pais, partida, duracao, valor, listaImagem, descricao);
@@ -217,15 +235,16 @@ import java.util.HashMap;
 
     private void autorizacao(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-        Cliente usuario = (Cliente) request.getSession().getAttribute("usuarioLogado");
+        Login usuario = (Login) request.getSession().getAttribute("usuarioLogado");
         if (usuario == null) {
             response.sendRedirect("../views/login.jsp");
             return;
         }
-        if (usuario.getAdmin() == 0) {
+        if (usuario.getAgencia() == null) {
             Erro erro = new Erro();
             erro.add("Você não tem permissão para acessar esta página.");
             request.setAttribute("mensagens", erro);
+            request.setAttribute("usuario", usuario);
             RequestDispatcher rd = request.getRequestDispatcher("/views/error.jsp");
             rd.forward(request, response);
             return;

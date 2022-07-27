@@ -13,18 +13,18 @@
 	<div align="center">
 		<h1>Gerenciamento de Pacotes de Viagem</h1>
 		<h2>
-			<a href="listaPacote.jsp">Voltar para a lista de Pacotes</a>
+			<a href="<%= contextPath%>/pacote/lista">Voltar para a lista de Pacotes</a>
 		</h2>
 	</div>
 	<div align="center">
 		<c:choose>
 			<c:when test="${pacote != null}">
-				<form action="atualizaPacote" method="post">
+				<form action="atualiza" method="post">
 					<%@include file="camposPacote.jsp"%>
 				</form>
 			</c:when>
 			<c:otherwise>
-				<form action="inserePacote" method="post">
+				<form action="insere" method="post">
 					<%@include file="camposPacote.jsp"%>
 				</form>
 			</c:otherwise>

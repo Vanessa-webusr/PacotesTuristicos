@@ -17,16 +17,8 @@
 	<c:if test="${pacote != null}">
 		<input type="hidden" name="id" value="${pacote.id}" />
 	</c:if>
-	<tr>
-		<td><label for="cnpj">CNPJ da Agencia</label></td>
-		<td><select id="cnpj" name="cnpj">
-			<c:forEach items="${agencias}" var="agencia">
-				<option value="${agencia.value}"
-					${pacote.cnpj == agencia.value ? 'selected' : '' }>
-					${agencia.value}</option>
-			</c:forEach>
-	</select></td>
-	</tr>
+	<input type="hidden" name="cnpj" value="${usuario.agencia.cnpj}" />	
+	<input type="hidden" name="agencia_id" value="${usuario.agencia.id}" />
 	<tr>
 		<th>Destino:</th>
 	</tr>

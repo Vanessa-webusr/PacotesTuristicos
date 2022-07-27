@@ -164,4 +164,34 @@ public class AgenciaDAO extends GenericDAO {
         }
         return agencia;
     }
+
+    public Agencia getByEmail(String email){
+        Agencia agencia = null;
+
+        String sql = "SELECT * from Agencia where email = ? ";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Long id = resultSet.getLong("id");
+                String senha = resultSet.getString("senha");
+                String cnpj = resultSet.getString("cnpj");
+                String nome = resultSet.getString("nome");
+                String descricao = resultSet.getString("descricao");
+
+                agencia = new Agencia(id, email, senha, cnpj, nome, descricao);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return agencia;
+    }
 }

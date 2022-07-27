@@ -10,6 +10,7 @@ package br.ufscar.dc.dsw.controller;
  import br.ufscar.dc.dsw.domain.Compra;
  import br.ufscar.dc.dsw.domain.Pacote;
  import br.ufscar.dc.dsw.domain.Imagem;
+ import br.ufscar.dc.dsw.domain.Login;
  import br.ufscar.dc.dsw.util.Erro;
 
  import java.io.IOException;
@@ -59,15 +60,19 @@ import java.util.HashMap;
             action = "";
         }
 
-        Cliente usuario = (Cliente) request.getSession().getAttribute("usuarioLogado");
+        Login usuario = (Login) request.getSession().getAttribute("usuarioLogado");
         if (usuario == null) {
+            Erro erro = new Erro("É necessário estar logado para acessar esta página.");
+            request.setAttribute("mensagens", erro);
             response.sendRedirect("../views/login.jsp");
             return;
         }
-        if (usuario.getAdmin() == 0) {
+
+        if (usuario.getAgencia() != null || usuario.getCliente().getAdmin() == 0) {
             Erro erro = new Erro();
             erro.add("Você não tem permissão para acessar esta página.");
             request.setAttribute("mensagens", erro);
+            request.setAttribute("usuario", usuario);
             RequestDispatcher rd = request.getRequestDispatcher("/views/error.jsp");
             rd.forward(request, response);
             return;

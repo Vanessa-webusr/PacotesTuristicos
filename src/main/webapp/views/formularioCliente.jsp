@@ -13,7 +13,7 @@
 	<div align="center">
 		<h1>Gerenciamento de Cliente</h1>
 		<h2>
-			<a href="listaCliente.jsp">Lista de Clientes</a>
+			<a href="<%= contextPath%>/cliente/lista">Lista de Clientes</a>
 		</h2>
 	</div>
 	<div align="center">
