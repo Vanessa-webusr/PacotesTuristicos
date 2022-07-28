@@ -5,6 +5,7 @@
 <html>
 <head>
 <title>Lista de Pacotes de Viagem</title>
+<script src="${pageContext.request.contextPath}/script/filter.js"></script>
 </head>
 <body>
 
@@ -18,8 +19,17 @@
 	</div>
 
 	<div align="center">
-		<table border="1">
+		<table border="1" id="tabela">
 			<caption>Lista de Pacotes</caption>
+			<tr>
+				<input type="text" id="id" onkeyup="filtro(0,'id')" placeholder="Pesquisar por id">
+				<input type="text" id="cidade" onkeyup="filtro(1,'cidade')" placeholder="Pesquisar por cidade">
+				<input type="text" id="estado"onkeyup="filtro(2, 'estado')" placeholder="Pesquisar por estado">
+				<input type="text" id="pais"onkeyup="filtro(3, 'pais')" placeholder="Pesquisar por país">
+				<input type="date" id="dataInicio" onchange="filtroData(4)" placeholder="Pesquisar por data">
+				<input type="date" id="dataFim" onchange="filtroData(4)" placeholder="Pesquisar por data">
+				<input type="number" id="duracao" onchange="filtroNumero(5, 'duracao')" placeholder="Pesquisar por duracao" min="1">
+			</tr>
 			<tr>
 				<c:if test="${filtrado}">
 					<th>Ações</th>

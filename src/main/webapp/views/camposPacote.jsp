@@ -47,7 +47,7 @@
     <tr>
 		<td><label for="duracao">Duracao (em dias)</label></td>
 		<td><input type="number" id="duracao" name="duracao" required 
-			value="${pacote.duracao}" /></td>
+			min="1" value="${pacote.duracao}" /></td>
 	</tr>
 	<tr>
 		<td><label for="valor">Valor</label></td>
