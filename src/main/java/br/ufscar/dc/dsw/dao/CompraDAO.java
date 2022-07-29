@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufscar.dc.dsw.domain.Compra;
+import br.ufscar.dc.dsw.domain.Imagem;
+import br.ufscar.dc.dsw.domain.Pacote;
 
 
 public class CompraDAO extends GenericDAO {
@@ -76,7 +78,6 @@ public class CompraDAO extends GenericDAO {
         }
         return listaCompra;
     }
-
 
 
 }
