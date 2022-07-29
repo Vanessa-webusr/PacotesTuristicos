@@ -13,23 +13,23 @@
 			<h1>Compra de Pacote</h1>
 		</div>
 		 <div align="center">
-		 	<p>Este eh um teste</p>
-		 	<p>Id: ${pacote.id}</p>
-			<p>${pacote.cidade}</p>
-			<p>${pacote.estado}</p>
-			<p>${pacote.pais}</p>
-			<p>${pacote.partida}</p>
-			<p>${pacote.duracao}</p>
-			<p>${pacote.valor}</p>
-			<p>${pacote.descricao}</p>
-			<p>${pacote.cnpj}</p>
+		 	<p><b>Pacote Escolhido:</b></p>
+			<p><b>Pacote: </b>${pacote.id}</p>
+			<p><b>Destino: </b>${pacote.cidade}, ${pacote.estado}, ${pacote.pais}</p>
+			<p><b>Data de partida:</b>${pacote.partida}</p>
+			<p><b>Duração da viagem:</b> ${pacote.duracao}</p>
+			<p><b>Valor do pacote:</b> ${pacote.valor}</p>
+			<p><b>Descrição:</b> ${pacote.descricao}</p>
+			<p><b>CNPJ agência:</b> ${pacote.cnpj}</p>
+			<h4>Fotos:</h4>
 			<c:forEach var="imagem" items="${pacote.imagem}">
 				<c:forEach var="link" items="${imagem.link}">
-					<img src="${link}" width=100 height=100>
+					<img src="${link}" width=200 height=200>
 				</c:forEach>
 			</c:forEach>
-			<h3><a href="#"
-			onclick="return confirm('Tem certeza de que deseja incluir este item ao carrinho?');">Comprar</a></h3>		
+			<br><br>
+			<input type="submit" value="Comprar">
+
 		</div>
 	</body>
 </html>

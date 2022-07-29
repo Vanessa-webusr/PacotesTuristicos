@@ -63,7 +63,7 @@
 				<tr>
 					
 					<td>${pacote.id}</td>
-					<td><a href="/<%= contextPath%>/compra/apresentacao">${pacote.cidade}</a></td>
+					<td><a href="/<%= contextPath%>/compra/apresentacao?id=${pacote.id}">${pacote.cidade}</a></td>
 					<td>${pacote.estado}</td>
 					<td>${pacote.pais}</td>
 					<td>${pacote.partida}</td>

@@ -87,6 +87,11 @@ import javax.servlet.http.HttpServletResponse;
 	 
 	    private void apresentaInformacao(HttpServletRequest request, HttpServletResponse response)
 	    		throws ServletException, IOException {
+	    	Long pacoteId = Long.parseLong(request.getParameter("id"));
+	        Pacote pacote = pacoteDao.get(pacoteId);
+	        //List <String> linkImagens = imagemDao.getLinkImagens(pacoteId);
+	        request.setAttribute("pacote", pacote);
+	        //request.setAttribute("imagens", linkImagens);
 	    	RequestDispatcher dispatcher = request.getRequestDispatcher("/views/compra.jsp");
 	    	dispatcher.forward(request, response);
 	    	
