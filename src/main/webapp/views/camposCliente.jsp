@@ -35,7 +35,7 @@
 	<tr>
 		<td><label for="nome">Nome</label></td>
 		<td><input type="text" id="nome" name="nome" size="45"
-			required value="${cliente.email}" /></td>
+			required value="${cliente.nome}" /></td>
 	</tr>
 	<tr>
 		<td><label for="telefone">Telefone</label></td>
@@ -43,29 +43,30 @@
 			min="0" value="${cliente.telefone}" /></td>
 	</tr>
 	<tr>
-		<td><label for="homem">Homem</label></td>
-		<td><input type="radio" id="homem" name="sexo"
-            value="H" /></td>
-        <td><label for="mulher">Mulher</label></td>
-		<td><input type="radio" id="Mulher" name="sexo"
-            value="M" /></td>
-        <td><label for="outro">Outro</label></td>
-		<td><input type="radio" id="outro" name="sexo"
-            value="O" /></td>
+		<td><label>Sexo</label></td>
+		<td><label for="homem">Homem</label>
+		<input type="radio" id="homem" name="sexo"
+            value="H" ${cliente.sexo=='H' ? 'checked' : '' }/>
+        <label for="mulher">Mulher</label>
+		<input type="radio" id="mulher" name="sexo"
+            value="M" ${cliente.sexo=='M' ? 'checked' : '' }/>
+        <label for="outro">Outro</label>
+		<input type="radio" id="outro" name="sexo"
+            value="O"${cliente.sexo=='O' ? 'checked' : '' }/></td>
 	</tr>
     <tr>
         <td><label for="nascimento">Data de Nascimento</label></td>
         <td><input type="date" id="nascimento" name="nascimento" required
-        value="${cliente}"></td>
+        value="${cliente.nascimento}"></td>
     </tr>
 	<tr>
 		<th>Administrador</th>
-		<td><label for="nao">Não</label></td>
-		<td><input type="radio" id="nao" name="admin"
-            value="0" /></td>
-        <td><label for="sim">Sim</label></td>
-		<td><input type="radio" id="sim" name="admin"
-            value="1" /></td>
+		<td><label for="nao">Não</label>
+		<input type="radio" id="nao" name="admin"
+            value="0" ${cliente.admin==1 ? 'checked' : '' }/>
+        <label for="sim">Sim</label>
+		<input type="radio" id="sim" name="admin"
+            value="1" ${cliente.admin==0 ? 'checked' : '' }/></td>
 	</tr>
 	<tr>
 		<td colspan="2" align="center"><input type="submit" value="Salva" /></td>

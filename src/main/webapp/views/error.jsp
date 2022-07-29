@@ -9,6 +9,7 @@
         <link href="${pageContext.request.contextPath}/layout.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        <div align="center">
         <h1>Erro encontrado</h1>
         <c:if test="${mensagens.existeErros}">
             <div id="erro">
@@ -19,5 +20,6 @@
                 </ul>
             </div>
         </c:if>
+        </div>
     </body>
 </html>

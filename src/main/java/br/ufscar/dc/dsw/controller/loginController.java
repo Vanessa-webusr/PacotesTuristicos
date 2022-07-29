@@ -2,22 +2,12 @@ package br.ufscar.dc.dsw.controller;
 
  import br.ufscar.dc.dsw.dao.AgenciaDAO;
  import br.ufscar.dc.dsw.dao.ClienteDAO;
- import br.ufscar.dc.dsw.dao.CompraDAO;
- import br.ufscar.dc.dsw.dao.PacoteDAO;
- import br.ufscar.dc.dsw.dao.ImagemDAO;
  import br.ufscar.dc.dsw.domain.Agencia;
  import br.ufscar.dc.dsw.domain.Cliente;
- import br.ufscar.dc.dsw.domain.Compra;
- import br.ufscar.dc.dsw.domain.Pacote;
- import br.ufscar.dc.dsw.domain.Imagem;
  import br.ufscar.dc.dsw.domain.Login;
  import br.ufscar.dc.dsw.util.Erro;
 
  import java.io.IOException;
- import java.util.Arrays;
- import java.util.HashMap;
- import java.util.List;
- import java.util.Map;
  import javax.servlet.RequestDispatcher;
  import javax.servlet.ServletException;
  import javax.servlet.annotation.WebServlet;
@@ -32,17 +22,11 @@ package br.ufscar.dc.dsw.controller;
 
     private AgenciaDAO agenciaDao;
     private ClienteDAO clienteDao;
-    private CompraDAO compraDao;
-    private PacoteDAO pacoteDao;
-    private ImagemDAO imagemDao;
 
     @Override
     public void init() {
         agenciaDao = new AgenciaDAO();
         clienteDao = new ClienteDAO();
-        compraDao = new CompraDAO();
-        pacoteDao = new PacoteDAO();
-        imagemDao = new ImagemDAO();
     }
 
     @Override

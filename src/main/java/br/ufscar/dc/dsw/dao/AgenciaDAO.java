@@ -194,4 +194,48 @@ public class AgenciaDAO extends GenericDAO {
         }
         return agencia;
     }
+
+    public boolean verificaEmailDuplicado(String email){
+        boolean duplicado = false;
+
+        String sql = "SELECT * from Agencia where email = ? ";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            duplicado = resultSet.next();
+            
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return duplicado;
+    }
+
+    public boolean verificaCnpjDuplicado(String cnpj){
+        boolean duplicado = false;
+
+        String sql = "SELECT * from Agencia where cnpj = ? ";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, cnpj);
+            ResultSet resultSet = statement.executeQuery();
+            duplicado = resultSet.next();
+            
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return duplicado;
+    }
 }

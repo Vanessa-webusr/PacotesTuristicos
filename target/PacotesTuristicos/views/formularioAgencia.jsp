@@ -13,10 +13,19 @@
 	<div align="center">
 		<h1>Gerenciamento de Agencias</h1>
 		<h2>
-			<a href="<%= contextPath%>/agencia/lista">Lista de Agencia</a>
+			<a href="/<%= contextPath%>/agencia/lista">Lista de Agencia</a>
 		</h2>
 	</div>
 	<div align="center">
+		<c:if test="${mensagens.existeErros}">
+            <div id="erro">
+                <ul>
+                    <c:forEach var="erro" items="${mensagens.erros}">
+                        <li> ${erro} </li>
+                        </c:forEach>
+                </ul>
+            </div>
+        </c:if>
 		<c:choose>
 			<c:when test="${agencia != null}">
 				<form action="atualiza" method="post">

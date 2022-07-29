@@ -59,6 +59,20 @@ public class ImagemDAO extends GenericDAO{
         return listaImagem;
     }
 
+    public List<String> getLinkImagens(Long pacote_id){
+        Imagem[] listaImagem = getPorPacote(pacote_id);
+        List<String> listaLink = new ArrayList<>();
+        int i = 0;
+        for(i = 0; i < 10; i++){
+            if(listaImagem[i] != null){
+                listaLink.add(listaImagem[i].getLink());
+            } else {
+                listaLink.add("");
+            }
+        }
+        return listaLink;
+    } 
+
     public void delete(Imagem imagem) {
         String sql = "DELETE FROM Foto where id = ?";
 
@@ -125,7 +139,7 @@ public class ImagemDAO extends GenericDAO{
 
     public Long idByPacoteLink(Long pacote_id, String link){
         Long id = (long) -1;
-        String sql = "SELECT * FROM Foto WHERE pacote_id = ?, imagem = ?";
+        String sql = "SELECT * FROM Foto WHERE pacote_id = ? and imagem = ?";
         try{
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);

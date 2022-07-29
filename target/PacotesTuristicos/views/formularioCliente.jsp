@@ -13,10 +13,19 @@
 	<div align="center">
 		<h1>Gerenciamento de Cliente</h1>
 		<h2>
-			<a href="<%= contextPath%>/cliente/lista">Lista de Clientes</a>
+			<a href="/<%= contextPath%>/cliente/lista">Lista de Clientes</a>
 		</h2>
 	</div>
 	<div align="center">
+		<c:if test="${mensagens.existeErros}">
+            <div id="erro">
+                <ul>
+                    <c:forEach var="erro" items="${mensagens.erros}">
+                        <li> ${erro} </li>
+                        </c:forEach>
+                </ul>
+            </div>
+        </c:if>
 		<c:choose>
 			<c:when test="${cliente != null}">
 				<h1>Atualizando</h1>

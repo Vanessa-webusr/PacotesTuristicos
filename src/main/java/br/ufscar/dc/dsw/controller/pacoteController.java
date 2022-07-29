@@ -93,9 +93,19 @@ import java.util.HashMap;
                     listaPorAgencia(request, response);
                     break;
                 default:
-                    erro(request, response);
+                    Erro erro = new Erro();
+                    erro.add("Erro 404:");
+                    erro.add("Página não encontrada.");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/views/error.jsp");
+                    dispatcher.forward(request, response);
             }
         } catch (RuntimeException | IOException | ServletException e){
+            //Erro erro = new Erro();
+            //erro.add("Erro ao processar a requisição.");
+            //erro.add(e.getMessage());
+            //request.setAttribute("mensagens", erro);
+            //RequestDispatcher dispatcher = request.getRequestDispatcher("/views/error.jsp");
+            //dispatcher.forward(request, response);
             throw new ServletException(e);
         }
     }
@@ -111,7 +121,9 @@ import java.util.HashMap;
     private void lista(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
         List<Pacote> listaPacote = pacoteDao.getAll();
+        List<Agencia> listaAgencia = agenciaDao.getAll();
         request.setAttribute("listaPacote", listaPacote);
+        request.setAttribute("listaAgencia", listaAgencia);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/views/listaPacote.jsp");
         dispatcher.forward(request, response);
     }
@@ -144,9 +156,11 @@ import java.util.HashMap;
     private void apresentaFormEdicao(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Long id = Long.parseLong(request.getParameter("id"));
-        Pacote pacote = pacoteDao.get(id); 
+        Pacote pacote = pacoteDao.get(id);
+        List <String> linkImagens = imagemDao.getLinkImagens(id);
         request.setAttribute("agencias", getAgencia()); 
         request.setAttribute("pacote", pacote);
+        request.setAttribute("imagens", linkImagens);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/views/formularioPacote.jsp");
         dispatcher.forward(request, response);
     }
@@ -200,7 +214,7 @@ import java.util.HashMap;
         Imagem[] listaImagem = {new Imagem()};
 
         int i = 0;
-        for(i = 0; i < 0; i++){
+        for(i = 0; i < 10; i++){
             listaImagem[i] = new Imagem(id, listaLink[i]);
             Long imagemId = imagemDao.idByPacoteLink(id, listaLink[i]);
             if(imagemId != -1){
@@ -225,12 +239,6 @@ import java.util.HashMap;
         Pacote pacote= new Pacote(id);
         pacoteDao.delete(pacote);
         response.sendRedirect("lista");
-    }
-
-    private void erro(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/authError.jsp");
-        dispatcher.forward(request, response);
     }
 
     private void autorizacao(HttpServletRequest request, HttpServletResponse response)

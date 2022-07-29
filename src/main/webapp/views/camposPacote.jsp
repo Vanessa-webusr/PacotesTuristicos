@@ -57,12 +57,22 @@
 	<tr>
 		<th>Fotos:</th>
 	</tr>
-	<c:forEach var="i" varStatus="i" begin="1" end="10" step="1">
+	<c:if test="${pacote != null}">
+	<c:forEach var="imagem" items="${imagens}" varStatus="i">
 		<tr>
 			<td><label for="imagem"> Imagem ${i.count}</label></td>
-			<td><input type = "text" id="imagem" name="imagem[]"></td>
+			<td><input type = "text" id="imagem" name="imagem[]" value="${imagem}"></td>
 		</tr>
 	</c:forEach>
+	</c:if>
+	<c:if test="${pacote == null}">
+		<c:forEach var="i" varStatus="i" begin="1" end="10">
+			<tr>
+					<td><label for="imagem"> Imagem ${i.count}</label></td>
+					<td><input type = "text" id="imagem" name="imagem[]"></td>
+			</tr>
+		</c:forEach>
+	</c:if>
     <tr>
         <td><label for="descricao">Descricao</label></td>
 		<td><input type="text" id="descricao" name="descricao" required

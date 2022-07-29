@@ -17,31 +17,37 @@
 		</h2>
 	</div>
 
+	<div align="center"><form>
+		<input type="text" class="filtro" id="id" onkeyup="filtro(0,'id')" placeholder="Pesquisar por id">
+		<input type="text" class="filtro" id="email" onkeyup="filtro(1,'email')" placeholder="Pesquisar por email">
+		<input type="text" class="filtro" id="cnpj"onkeyup="filtro(2, 'cnpj')" placeholder="Pesquisar por cnpj">
+		<input type="text" class="filtro" id="nome"onkeyup="filtro(3, 'nome')" placeholder="Pesquisar por nome">
+		<input type="reset" value="Limpar Filtro" onclick="limpar()">
+		</form></div>
+
 	<div align="center">
-		<table border="1">
+		<table border="1" id="tabela">
 			<caption>Lista de Agencia</caption>
 			<tr>
-				<th>Ações</th>
 				<th>ID</th>
 				<th>E-mail</th>
-				<th>Senha</th>
 				<th>CNPJ</th>
 				<th>Nome</th>
 				<th>Descricao</th>
+				<th>Ações</th>
 			</tr>
 			<c:forEach var="agencia" items="${requestScope.listaAgencia}">
 				<tr>
+					<td>${agencia.id}</td>
+					<td>${agencia.email}</td>
+					<td>${agencia.cnpj}</td>
+					<td>${agencia.nome}</td>
+					<td>${agencia.descricao}</td>
 					<td><a href="/<%= contextPath%>/agencia/edicao?id=${agencia.id}">Edição</a>
 						&nbsp;&nbsp;&nbsp;&nbsp; <a
 						href="/<%= contextPath%>/agencia/remove?id=${agencia.id}"
 						onclick="return confirm('Tem certeza de que deseja excluir este item?');">
 							Remoção </a></td>
-					<td>${agencia.id}</td>
-					<td>${agencia.email}</td>
-					<td>${agencia.senha}</td>
-					<td>${agencia.cnpj}</td>
-					<td>${agencia.nome}</td>
-					<td>${agencia.descricao}</td>
 				</tr>
 			</c:forEach>
 		</table>

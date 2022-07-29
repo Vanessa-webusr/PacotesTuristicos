@@ -177,4 +177,48 @@ public class ClienteDAO extends GenericDAO {
         }
         return cliente;
     }
+
+    public boolean verificaEmailDuplicado(String email){
+        boolean duplicado = false;
+
+        String sql = "SELECT * from Pessoa where email = ? ";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            duplicado = resultSet.next();
+            
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return duplicado;
+    }
+
+    public boolean verificaCpfDuplicado(String cpf){
+        boolean duplicado = false;
+
+        String sql = "SELECT * from Pessoa where cpf = ? ";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, cpf);
+            ResultSet resultSet = statement.executeQuery();
+            duplicado = resultSet.next();
+            
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return duplicado;
+    }
 }
