@@ -6,19 +6,20 @@
 <head>
 <title>Lista de Pacotes de Viagem</title>
 <script src="${pageContext.request.contextPath}/script/filter.js"></script>
+<link rel="stylesheet" href="../style/styleSheet.css">
 </head>
 <body>
 
 	<%@include file="cabecalho.jsp"%>
 	<div align="center">
-		<h1>Lista de Pacote de Viagens</h1>
+		<h1>Lista de Pacote de Viagens <c:if test="${filtrado}">de ${usuarioLogado.agencia.nome}</c:if></h1>
 		<h2>
 			<a href="/<%=contextPath%>">Menu Principal</a> &nbsp;&nbsp;&nbsp;
 			<c:if test="${usuario.agencia != null}"><a href="/<%= contextPath%>/pacote/cadastro">Adicione Novo Pacote</a></c:if>
 		</h2>
 	</div>
 
-	<div align="center"><form>
+	<div align="center"><form id="filtro">
 		<input type="text" class="filtro" id="id" onkeyup="filtro(0,'id')" placeholder="Pesquisar por id">
 		<input type="text" class="filtro" id="cidade" onkeyup="filtro(1,'cidade')" placeholder="Pesquisar por cidade">
 		<input type="text" class="filtro" id="estado"onkeyup="filtro(2, 'estado')" placeholder="Pesquisar por estado">
@@ -42,7 +43,7 @@
 		</form></div>
 
 	<div align="center">
-		<table border="1" id="tabela">
+		<table id="tabela">
 			<caption>Lista de Pacotes</caption>
 			<tr>	
 				<th>ID</th>

@@ -5,6 +5,8 @@
 <html>
 <head>
 <title>Lista de Agencias</title>
+<script src="${pageContext.request.contextPath}/script/filter.js"></script>
+<link rel="stylesheet" href="../style/styleSheet.css">
 </head>
 <body>
 
@@ -17,7 +19,7 @@
 		</h2>
 	</div>
 
-	<div align="center"><form>
+	<div align="center"><form id="filtro">
 		<input type="text" class="filtro" id="id" onkeyup="filtro(0,'id')" placeholder="Pesquisar por id">
 		<input type="text" class="filtro" id="email" onkeyup="filtro(1,'email')" placeholder="Pesquisar por email">
 		<input type="text" class="filtro" id="cnpj"onkeyup="filtro(2, 'cnpj')" placeholder="Pesquisar por cnpj">
@@ -26,7 +28,7 @@
 		</form></div>
 
 	<div align="center">
-		<table border="1" id="tabela">
+		<table id="tabela">
 			<caption>Lista de Agencia</caption>
 			<tr>
 				<th>ID</th>
