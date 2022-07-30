@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufscar.dc.dsw.domain.Compra;
+import br.ufscar.dc.dsw.domain.Imagem;
+import br.ufscar.dc.dsw.domain.Pacote;
 
 
 public class CompraDAO extends GenericDAO {
@@ -77,6 +79,27 @@ public class CompraDAO extends GenericDAO {
         return listaCompra;
     }
 
+    public Compra getCompra() {
+    	String sql = "SELECT * FROM Compra WHERE pacote_id = ?";
+    	Compra compra = null;
+        try{
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
 
+            ResultSet resultSet = statement.executeQuery();
+            Long id = resultSet.getLong("id");
+            Long pacoteId = resultSet.getLong("pacote_id");
+            Long pessoaId = resultSet.getLong("pessoa_id");
+            Double valor = resultSet.getDouble("valor");
 
+            compra = new Compra(id, pacoteId, pessoaId, valor);
+                
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return compra;
+    }
 }
