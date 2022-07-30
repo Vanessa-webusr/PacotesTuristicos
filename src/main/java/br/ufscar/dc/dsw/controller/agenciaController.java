@@ -1,8 +1,11 @@
 package br.ufscar.dc.dsw.controller;
 
  import br.ufscar.dc.dsw.dao.AgenciaDAO;
- import br.ufscar.dc.dsw.domain.Agencia;
+import br.ufscar.dc.dsw.dao.ImagemDAO;
+import br.ufscar.dc.dsw.dao.PacoteDAO;
+import br.ufscar.dc.dsw.domain.Agencia;
  import br.ufscar.dc.dsw.domain.Login;
+import br.ufscar.dc.dsw.domain.Pacote;
  import br.ufscar.dc.dsw.util.Erro;
 
  import java.io.IOException;
@@ -187,6 +190,15 @@ import java.util.HashMap;
         Long id = Long.parseLong(request.getParameter("id"));
 
         Agencia agencia = new Agencia(id);
+        PacoteDAO pacoteDao = new PacoteDAO();
+        ImagemDAO imagemDao = new ImagemDAO();
+        List<Pacote> pacotes = pacoteDao.getPorAgencia(agencia.getId());
+        while(pacotes.size() > 0){
+            Pacote pacote = pacotes.remove(0);
+            imagemDao.deleteAll(pacote.getId());
+            pacoteDao.delete(pacote);
+            pacotes = pacoteDao.getPorAgencia(agencia.getId());
+        }
         agenciaDao.delete(agencia);
         response.sendRedirect("lista");
     }

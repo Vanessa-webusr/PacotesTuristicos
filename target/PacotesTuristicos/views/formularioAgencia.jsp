@@ -6,6 +6,7 @@
 
 <head>
 <title>Gerenciamento de Agencia</title>
+<link rel="stylesheet" href="../style/styleSheet.css">
 </head>
 
 <body>
@@ -28,12 +29,12 @@
         </c:if>
 		<c:choose>
 			<c:when test="${agencia != null}">
-				<form action="atualiza" method="post">
+				<form action="atualiza" method="post" id="formulario">
 					<%@include file="camposAgencia.jsp"%>
 				</form>
 			</c:when>
 			<c:otherwise>
-				<form action="insere" method="post">
+				<form action="insere" method="post" id="formulario">
 					<%@include file="camposAgencia.jsp"%>
 				</form>
 			</c:otherwise>

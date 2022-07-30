@@ -45,10 +45,10 @@
 					<td>${agencia.cnpj}</td>
 					<td>${agencia.nome}</td>
 					<td>${agencia.descricao}</td>
-					<td><a href="/<%= contextPath%>/agencia/edicao?id=${agencia.id}">Edição</a>
-						&nbsp;&nbsp;&nbsp;&nbsp; <a
+					<td><a href="/<%= contextPath%>/agencia/edicao?id=${agencia.id}" class="acoes">Edição</a>
+						&nbsp;&nbsp;&nbsp;&nbsp; <a class="acoes"
 						href="/<%= contextPath%>/agencia/remove?id=${agencia.id}"
-						onclick="return confirm('Tem certeza de que deseja excluir este item?');">
+						onclick="return confirm('Tem certeza de que deseja excluir esta agencia? excluira tambem todos os pacotes e compras destes pacotes');">
 							Remoção </a></td>
 				</tr>
 			</c:forEach>

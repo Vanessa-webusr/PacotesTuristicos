@@ -157,4 +157,21 @@ public class ImagemDAO extends GenericDAO{
         }
         return id;
     }
+
+    public void deleteAll(Long pacote_id){
+        String sql = "DELETE FROM Foto WHERE pacote_id = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setLong(1, pacote_id);
+            statement.executeUpdate();
+
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

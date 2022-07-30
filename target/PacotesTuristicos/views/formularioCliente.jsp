@@ -6,6 +6,7 @@
 
 <head>
 <title>Gerenciamento de Cliente</title>
+<link rel="stylesheet" href="../style/styleSheet.css">
 </head>
 
 <body>
@@ -29,12 +30,12 @@
 		<c:choose>
 			<c:when test="${cliente != null}">
 				<h1>Atualizando</h1>
-				<form action="atualiza" method="post">
+				<form action="atualiza" method="post" id="formulario">
 					<%@include file="camposCliente.jsp"%>
 				</form>
 			</c:when>
 			<c:otherwise>
-				<form action="insere" method="post">
+				<form action="insere" method="post" id="formulario">
 					<%@include file="camposCliente.jsp"%>
 				</form>
 			</c:otherwise>

@@ -7,6 +7,7 @@
 
 <head>
     <title>Cadastro de Pacotes</title>
+	<link rel="stylesheet" href="../style/styleSheet.css">
 </head>
 <body>
 	<%@include file="cabecalho.jsp"%>
@@ -19,12 +20,12 @@
 	<div align="center">
 		<c:choose>
 			<c:when test="${pacote != null}">
-				<form action="atualiza" method="post">
+				<form action="atualiza" method="post" id="formulario">
 					<%@include file="camposPacote.jsp"%>
 				</form>
 			</c:when>
 			<c:otherwise>
-				<form action="insere" method="post">
+				<form action="insere" method="post" id="formulario">
 					<%@include file="camposPacote.jsp"%>
 				</form>
 			</c:otherwise>

@@ -130,6 +130,20 @@ public class PacoteDAO extends GenericDAO{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        sql = "DELETE FROM Imagem WHERE pacote_id = ?";
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setLong(1, pacote.getId());
+            statement.executeUpdate();
+
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void update(Pacote pacote) {

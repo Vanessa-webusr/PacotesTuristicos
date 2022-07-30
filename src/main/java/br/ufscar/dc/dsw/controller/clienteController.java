@@ -1,7 +1,8 @@
 package br.ufscar.dc.dsw.controller;
 
  import br.ufscar.dc.dsw.dao.ClienteDAO;
- import br.ufscar.dc.dsw.domain.Cliente;
+import br.ufscar.dc.dsw.dao.CompraDAO;
+import br.ufscar.dc.dsw.domain.Cliente;
  import br.ufscar.dc.dsw.domain.Login;
  import br.ufscar.dc.dsw.util.Erro;
 
@@ -193,6 +194,8 @@ import java.util.HashMap;
         Long id = Long.parseLong(request.getParameter("id"));
 
         Cliente cliente= new Cliente(id);
+        CompraDAO compraDao = new CompraDAO();
+        compraDao.deleteAllByCliente(id);
         clienteDao.delete(cliente);
         response.sendRedirect("lista");
     }

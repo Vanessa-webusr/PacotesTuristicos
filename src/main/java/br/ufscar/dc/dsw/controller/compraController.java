@@ -14,7 +14,9 @@ import br.ufscar.dc.dsw.domain.Login;
 import br.ufscar.dc.dsw.util.Erro;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,6 +79,12 @@ import javax.servlet.http.HttpServletResponse;
 	                case "/insere":
 	                	insereCompra(request, response);
 	                	break;
+					case "/lista":
+						listaPorUsuario(request, response);
+						break;	
+					case "/cancelar":
+						cancelarCompra(request, response);
+						break;			
 	                default:
 	                    erro(request, response);
 	            }
@@ -100,6 +108,8 @@ import javax.servlet.http.HttpServletResponse;
 
 	    private void erro(HttpServletRequest request, HttpServletResponse response)
 	      throws ServletException, IOException {
+			Erro erro = new Erro("Erro ao acessar a página.");
+			request.setAttribute("mensagens", erro);
 	        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/authError.jsp");
 	        dispatcher.forward(request, response);
 	    }
@@ -107,10 +117,46 @@ import javax.servlet.http.HttpServletResponse;
 	    private void insereCompra(HttpServletRequest request, HttpServletResponse response)
 	            throws ServletException, IOException {
 	    	request.setCharacterEncoding("UTF-8");
-	    	Long pacote_id = Long.parseLong(request.getParameter("pacote_id"));
-	    	Long pessoa_id = Long.parseLong(request.getParameter("pessoa_id"));
-	    	Double valor = Double.parseDouble(request.getParameter("valor"));
-	    	Compra compra = new Compra(pacote_id, pessoa_id, valor);
+	    	Long pacote_id = Long.parseLong(request.getParameter("idPacote"));
+			Pacote pacote = pacoteDao.get(pacote_id);
+	    	Long pessoa_id = Long.parseLong(request.getParameter("idCliente"));
+	    	Float valor = Float.parseFloat(request.getParameter("valor"));
+	    	Compra compra = new Compra(pacote, pessoa_id, valor, 1);
 	    	compraDao.insert(compra);
+
+			response.sendRedirect("../pacote/lista");
 	    }
+
+		private void listaPorUsuario(HttpServletRequest request, HttpServletResponse response)
+      			throws ServletException, IOException {
+        	Login usuario = (Login) request.getSession().getAttribute("usuarioLogado");
+        	List<Compra> listaCompra = compraDao.getPorCliente(usuario.getCliente().getId());   
+        	request.setAttribute("listaCompra", listaCompra);
+        	request.setAttribute("usuario", usuario);
+        	RequestDispatcher dispatcher = request.getRequestDispatcher("/views/listaCompra.jsp");
+        	dispatcher.forward(request, response);
+    	}
+
+		private void cancelarCompra(HttpServletRequest request, HttpServletResponse response)
+				throws ServletException, IOException {
+			Long id = Long.parseLong(request.getParameter("id"));
+			Pacote pacote = compraDao.get(id).getPacote();
+			// check "partida" date against system date
+			LocalDate dataPartida = LocalDate.parse(pacote.getPartida());
+			if (dataPartida.isBefore(LocalDate.now())) {
+				Erro erro = new Erro("Não é possível cancelar um pacote que já ocorreu.");
+				request.setAttribute("mensagens", erro);
+				listaPorUsuario(request, response);
+				return;
+			}
+			dataPartida = dataPartida.minusDays(5);
+			if (dataPartida.isBefore(LocalDate.now())) {
+				Erro erro = new Erro("Só é possível cancelar um pacote com no mínimo 5 dias de antecedência.");
+				request.setAttribute("mensagens", erro);
+				listaPorUsuario(request, response);
+				return;
+			}
+			compraDao.updateAtivo(id, 0);
+			listaPorUsuario(request, response);
+		}
  	}

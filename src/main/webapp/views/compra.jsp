@@ -5,6 +5,7 @@
 <html>
 	<head>
 	<title>Compra pacote</title>
+	<link rel="stylesheet" href="../style/styleSheet.css">
 	</head>
 	<body>
 	
@@ -12,7 +13,7 @@
 		<div align="center">
 			<h1>Compra de Pacote</h1>
 		</div>
-		 <div align="center">
+		 <div align="center" id="compra">
 		 	<p><b>Pacote Escolhido:</b></p>
 			<p><b>Pacote: </b>${pacote.id}</p>
 			<p><b>Destino: </b>${pacote.cidade}, ${pacote.estado}, ${pacote.pais}</p>
@@ -28,8 +29,13 @@
 				</c:forEach>
 			</c:forEach>
 			<br><br>
-			<input type="submit" value="Comprar">
-
+			<form action="/<%=contextPath%>/compra/insere" method="get">
+				<input type="hidden" name="idPacote" value="${pacote.id}">
+				<input type="hidden" name="idCliente" value="${usuarioLogado.cliente.id}">
+				<input type="number" id="valor" name="valor" required
+			min="0.01" step="any" size="5" value="${pacote.valor}">
+				<input type="submit" value="Comprar">
+			</form>
 		</div>
 	</body>
 </html>

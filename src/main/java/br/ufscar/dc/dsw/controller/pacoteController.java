@@ -236,6 +236,7 @@ import java.util.HashMap;
         Long id = Long.parseLong(request.getParameter("id"));
 
         Pacote pacote= new Pacote(id);
+        compraDao.deleteAllByPacote(id);
         pacoteDao.delete(pacote);
         listaPorAgencia(request, response);
     }

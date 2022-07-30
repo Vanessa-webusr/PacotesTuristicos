@@ -54,10 +54,10 @@
 					<td>${cliente.telefone}</td>
                     <td>${cliente.sexo}</td>
                     <td>${cliente.nascimento}</td>
-					<td><a href="/<%= contextPath%>/cliente/edicao?id=${cliente.id}">Edição</a>
-						&nbsp;&nbsp;&nbsp;&nbsp; <a
+					<td><a href="/<%= contextPath%>/cliente/edicao?id=${cliente.id}" class="acoes">Edição</a>
+						&nbsp;&nbsp;&nbsp;&nbsp; <a class="acoes"
 						href="/<%= contextPath%>/cliente/remove?id=${cliente.id}"
-						onclick="return confirm('Tem certeza de que deseja excluir este item?');">
+						onclick="return confirm('Tem certeza de que deseja excluir este cliente? Tambem excluira todos as compras deste cliente');">
 							Remoção </a></td>
 				</tr>
 			</c:forEach>

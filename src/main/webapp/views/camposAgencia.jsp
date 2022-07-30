@@ -3,7 +3,7 @@
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<table border="1">
+<table>
 	<caption>
 		<c:choose>
 			<c:when test="${agencia != null}">
@@ -43,6 +43,6 @@
 			value="${agenica.descricao}" /></td>
 	</tr>
 	<tr>
-		<td colspan="2" align="center"><input type="submit" value="Salva" /></td>
+		<td colspan="2" align="center"><input type="submit" value="Salva" id="submit"/></td>
 	</tr>
 </table>

@@ -3,7 +3,7 @@
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<table border="1">
+<table>
 	<caption>
 		<c:choose>
 			<c:when test="${cliente != null}">
@@ -60,7 +60,7 @@
         value="${cliente.nascimento}"></td>
     </tr>
 	<tr>
-		<th>Administrador</th>
+		<th><label for="admin">Administrador</label></th>
 		<td><label for="nao">Não</label>
 		<input type="radio" id="nao" name="admin"
             value="0" ${cliente.admin==1 ? 'checked' : '' }/>
@@ -69,6 +69,6 @@
             value="1" ${cliente.admin==0 ? 'checked' : '' }/></td>
 	</tr>
 	<tr>
-		<td colspan="2" align="center"><input type="submit" value="Salva" /></td>
+		<td colspan="2" align="center"><input type="submit" value="Salva" id="submit"/></td>
 	</tr>
 </table>

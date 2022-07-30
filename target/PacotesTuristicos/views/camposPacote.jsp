@@ -3,7 +3,7 @@
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<table border="1">
+<table>
 	<caption>
 		<c:choose>
 			<c:when test="${pacote != null}">
@@ -58,7 +58,7 @@
 		<th>Fotos:</th>
 	</tr>
 	<c:if test="${pacote != null}">
-	<c:forEach var="imagem" items="${imagens}" varStatus="i">
+	<c:forEach var="imagem" items="${imagens}" varStatus="i" >
 		<tr>
 			<td><label for="imagem"> Imagem ${i.count}</label></td>
 			<td><input type = "text" id="imagem" name="imagem[]" value="${imagem}"></td>
@@ -79,6 +79,6 @@
             size="256" value="${pacote.descricao}" /></td>
     </tr>
 	<tr>
-		<td colspan="2" align="center"><input type="submit" value="Salva" /></td>
+		<td colspan="2" align="center"><input type="submit" value="Salva" id="submit"/></td>
 	</tr>
 </table>

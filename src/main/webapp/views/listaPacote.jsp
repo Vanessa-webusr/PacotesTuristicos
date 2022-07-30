@@ -61,17 +61,17 @@
 				</c:if>	
 			</tr>
 			<c:forEach var="pacote" items="${requestScope.listaPacote}">
-				<tr>
-					
-					<td>${pacote.id}</td>
-					<td><a href="/<%= contextPath%>/compra/apresentacao?id=${pacote.id}">${pacote.cidade}</a></td>
-					<td>${pacote.estado}</td>
-					<td>${pacote.pais}</td>
-					<td>${pacote.partida}</td>
-					<td>${pacote.duracao}</td>
-					<td>${pacote.valor}</td>
-					<td>${pacote.descricao}</td>
-					<td>${pacote.cnpj}</td>
+				<tr <c:if test="${usuarioLogado != null && usuarioLogado.cliente != null}"> onclick="compraPacote(${pacote.id})"</c:if>>
+			
+						<td>${pacote.id}</td>
+						<td>${pacote.cidade}</td>
+						<td>${pacote.estado}</td>
+						<td>${pacote.pais}</td>
+						<td>${pacote.partida}</td>
+						<td>${pacote.duracao}</td>
+						<td>${pacote.valor}</td>
+						<td>${pacote.descricao}</td>
+						<td>${pacote.cnpj}</td>
 					<td>
 					<c:forEach var="imagem" items="${pacote.imagem}">
 						<c:forEach var="link" items="${imagem.link}">
@@ -80,10 +80,10 @@
 					</c:forEach>
 					</td>
 					<c:if test="${filtrado}">
-					<td><a href="/<%= contextPath%>/pacote/edicao?id=${pacote.id}">Edição</a>
-						&nbsp;&nbsp;&nbsp;&nbsp; <a
+					<td><a href="/<%= contextPath%>/pacote/edicao?id=${pacote.id}" class="acoes">Edição</a>
+						&nbsp;&nbsp;&nbsp;&nbsp; <a class="acoes"
 						href="/<%= contextPath%>/pacote/remove?id=${pacote.id}"
-						onclick="return confirm('Tem certeza de que deseja excluir este item?');">
+						onclick="return confirm('Tem certeza de que deseja excluir este pacote? Removera tambem todas as compras realizadas pelos clientes');">
 							Remoção </a></td></c:if>
 				</tr>
 			</c:forEach>

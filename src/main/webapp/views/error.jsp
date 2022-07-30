@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="../style/styleSheet.css">
     </head>
     <body>
-        <div align="center">
+        <div align="center" id="errorPage">
         <h1>Erro encontrado</h1>
         <c:if test="${mensagens.existeErros}">
             <div id="erro">
