@@ -5,6 +5,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../style/styleSheet.css">
         <title>Autenticação de Usuário</title>
     </head>
     <body>
@@ -21,14 +22,15 @@
                 </ul>
             </div>
         </c:if>
-        <form method="post" action="/<%= contextPath%>/auth/login">
+        <div id="loginDiv">
+        <form method="post" action="/<%= contextPath%>/auth/login" id="loginForm">
             <table>
                 <tr>
-                    <td><label for="cliente">Cliente</label></td>
-                    <td><input type="radio" id="cliente" name="tipo"
-                        value="Cliente" checked/></td>
-                    <td><label for="agencia">Agência</label></td>
-                    <td><input type="radio" id="agencia" name="tipo"
+                    <td colspan="2" align="center"><label for="cliente">Cliente</label>
+                    <input type="radio" id="cliente" name="tipo"
+                        value="Cliente" checked/>
+                    <label for="agencia">Agência</label>
+                    <input type="radio" id="agencia" name="tipo"
                         value="Agencia" /></td></tr>
                 <tr>
                     <th>Login: </th>
@@ -45,5 +47,6 @@
                 </tr>
             </table>
         </form>
+        </div>
     </body>
 </html>

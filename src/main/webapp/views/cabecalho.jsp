@@ -7,6 +7,7 @@
 <%
 		String contextPath = request.getContextPath().replace("/", "");
 %>
+<div id="cabecalho">
 <table>
     <tr>
         <td>
@@ -32,3 +33,4 @@
         </td>
     </tr>
 </table>
+</div>  
