@@ -100,12 +100,12 @@ import java.util.HashMap;
                     dispatcher.forward(request, response);
             }
         } catch (RuntimeException | IOException | ServletException e){
-            //Erro erro = new Erro();
-            //erro.add("Erro ao processar a requisição.");
-            //erro.add(e.getMessage());
-            //request.setAttribute("mensagens", erro);
-            //RequestDispatcher dispatcher = request.getRequestDispatcher("/views/error.jsp");
-            //dispatcher.forward(request, response);
+            Erro erro = new Erro();
+            erro.add("Erro ao processar a requisição.");
+            erro.add(e.getMessage());
+            request.setAttribute("mensagens", erro);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/views/error.jsp");
+            dispatcher.forward(request, response);
             throw new ServletException(e);
         }
     }
@@ -189,8 +189,10 @@ import java.util.HashMap;
         Long id = pacoteDao.getMaxId();
         int length = listaLink.length;
         for (int i = 0; i < length; i++) {
-            Imagem imagem = new Imagem(id, listaLink[i]);
-            imagemDao.insert(imagem);
+            if(listaLink[i] != "" && listaLink[i] != null && !listaLink[i].isEmpty()){
+                Imagem imagem = new Imagem(id, listaLink[i]);
+                imagemDao.insert(imagem);
+            }
         }
         
         response.sendRedirect("lista");
@@ -213,15 +215,12 @@ import java.util.HashMap;
         String[] listaLink = request.getParameterValues("imagem[]");
         Imagem[] listaImagem = {new Imagem()};
 
-        int i = 0;
-        for(i = 0; i < 10; i++){
-            listaImagem[i] = new Imagem(id, listaLink[i]);
-            Long imagemId = imagemDao.idByPacoteLink(id, listaLink[i]);
-            if(imagemId != -1){
-                listaImagem[i].setId(imagemId);
-                imagemDao.update(listaImagem[i]);
-            } else {
-                imagemDao.insert(listaImagem[i]);
+        imagemDao.deleteAll(id);
+        int length = listaLink.length;
+        for (int i = 0; i < length; i++) {
+            if(listaLink[i] != "" && listaLink[i] != null && !listaLink[i].isEmpty()){
+                Imagem imagem = new Imagem(id, listaLink[i]);
+                imagemDao.insert(imagem);
             }
         }
 
@@ -229,16 +228,16 @@ import java.util.HashMap;
  
         Pacote pacote = new Pacote(id, cnpj, agencia_id, cidade, estado, pais, partida, duracao, valor, listaImagem, descricao);
         pacoteDao.update(pacote);
-        response.sendRedirect("lista");
+        listaPorAgencia(request, response);
     }
 
     private void remove(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+            throws IOException, ServletException {
         Long id = Long.parseLong(request.getParameter("id"));
 
         Pacote pacote= new Pacote(id);
         pacoteDao.delete(pacote);
-        response.sendRedirect("lista");
+        listaPorAgencia(request, response);
     }
 
     private void autorizacao(HttpServletRequest request, HttpServletResponse response)

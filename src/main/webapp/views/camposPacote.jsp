@@ -58,7 +58,7 @@
 		<th>Fotos:</th>
 	</tr>
 	<c:if test="${pacote != null}">
-	<c:forEach var="imagem" items="${imagens}" varStatus="i">
+	<c:forEach var="imagem" items="${imagens}" varStatus="i" >
 		<tr>
 			<td><label for="imagem"> Imagem ${i.count}</label></td>
 			<td><input type = "text" id="imagem" name="imagem[]" value="${imagem}"></td>
