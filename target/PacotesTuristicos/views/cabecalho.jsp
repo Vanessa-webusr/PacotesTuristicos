@@ -16,7 +16,9 @@
             		<c:when test="${usuario.cliente.sexo == 'F'}"> 
             			<c:out value="Bem-vinda, "/>
             		</c:when>
-            	
+                    <c:when test="${usuario.cliente.sexo == 'O'}">
+                        <c:out value="Bem-vinde, "/>
+                    </c:when>
             		<c:otherwise> 
             			<c:out value="Bem-vindo, "/>
             		</c:otherwise>
