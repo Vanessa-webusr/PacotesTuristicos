@@ -44,12 +44,12 @@
 	</tr>
 	<tr>
 		<td><label>Sexo</label></td>
-		<td><label for="homem">Homem</label>
+		<td><label for="masculino">Masculino</label>
 		<input type="radio" id="homem" name="sexo"
-            value="H" ${cliente.sexo=='H' ? 'checked' : '' }/>
-        <label for="mulher">Mulher</label>
-		<input type="radio" id="mulher" name="sexo"
             value="M" ${cliente.sexo=='M' ? 'checked' : '' }/>
+        <label for="feminino">Feminino</label>
+		<input type="radio" id="mulher" name="sexo"
+            value="F" ${cliente.sexo=='M' ? 'checked' : '' }/>
         <label for="outro">Outro</label>
 		<input type="radio" id="outro" name="sexo"
             value="O"${cliente.sexo=='O' ? 'checked' : '' }/></td>

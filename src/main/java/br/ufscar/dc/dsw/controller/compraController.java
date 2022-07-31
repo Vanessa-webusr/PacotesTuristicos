@@ -130,9 +130,11 @@ import javax.servlet.http.HttpServletResponse;
 		private void listaPorUsuario(HttpServletRequest request, HttpServletResponse response)
       			throws ServletException, IOException {
         	Login usuario = (Login) request.getSession().getAttribute("usuarioLogado");
-        	List<Compra> listaCompra = compraDao.getPorCliente(usuario.getCliente().getId());   
+        	List<Compra> listaCompra = compraDao.getPorCliente(usuario.getCliente().getId());  
+        	List<Agencia> listaAgencia = agenciaDao.getAll();
         	request.setAttribute("listaCompra", listaCompra);
         	request.setAttribute("usuario", usuario);
+        	request.setAttribute("listaAgencia", listaAgencia);
         	RequestDispatcher dispatcher = request.getRequestDispatcher("/views/listaCompra.jsp");
         	dispatcher.forward(request, response);
     	}
