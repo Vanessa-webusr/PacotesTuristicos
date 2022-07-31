@@ -49,7 +49,7 @@
             value="M" ${cliente.sexo=='M' ? 'checked' : '' }/>
         <label for="feminino">Feminino</label>
 		<input type="radio" id="mulher" name="sexo"
-            value="F" ${cliente.sexo=='M' ? 'checked' : '' }/>
+            value="F" ${cliente.sexo=='F' ? 'checked' : '' }/>
         <label for="outro">Outro</label>
 		<input type="radio" id="outro" name="sexo"
             value="O"${cliente.sexo=='O' ? 'checked' : '' }/></td>
