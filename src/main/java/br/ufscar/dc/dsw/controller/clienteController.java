@@ -86,16 +86,19 @@ import java.util.HashMap;
                     Erro erro = new Erro();
                     erro.add("Erro 404:");
                     erro.add("Página não encontrada.");
+                    request.setAttribute("mensagens", erro);
+                    request.setAttribute("linkVoltar", "../pacote/lista");
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/views/error.jsp");
                     dispatcher.forward(request, response);
             }
         } catch (RuntimeException | IOException | ServletException e){
-            //Erro erro = new Erro();
-            //erro.add("Erro ao processar a requisição.");
-            //erro.add(e.getMessage());
-            //request.setAttribute("mensagens", erro);
-            //RequestDispatcher dispatcher = request.getRequestDispatcher("/views/error.jsp");
-            //dispatcher.forward(request, response);
+            Erro erro = new Erro();
+            erro.add("Erro ao processar a requisição.");
+            erro.add(e.getMessage());
+            request.setAttribute("mensagens", erro);
+            request.setAttribute("linkVoltar", "../cliente/lista");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/views/error.jsp");
+            dispatcher.forward(request, response);
             throw new ServletException(e);
         }
     }
@@ -150,8 +153,9 @@ import java.util.HashMap;
             erro.add("Erro ao cadastrar cliente:");
             erro.add("Este email já está cadastrado.");
             request.setAttribute("mensagens", erro);
-            RequestDispatcher rd = request.getRequestDispatcher("/views/error.jsp");
-            rd.forward(request, response);
+            request.setAttribute("linkVoltar", "../cliente/cadastro");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/views/error.jsp");
+            dispatcher.forward(request, response);
             return;
         }
 
@@ -160,8 +164,9 @@ import java.util.HashMap;
             erro.add("Erro ao cadastrar cliente:");
             erro.add("Este CPF já está cadastrado.");
             request.setAttribute("mensagens", erro);
-            RequestDispatcher rd = request.getRequestDispatcher("/views/error.jsp");
-            rd.forward(request, response);
+            request.setAttribute("linkVoltar", "../cliente/cadastro");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/views/error.jsp");
+            dispatcher.forward(request, response);
             return;
         }
  
@@ -183,6 +188,31 @@ import java.util.HashMap;
         String sexo = request.getParameter("sexo");
         String nascimento = request.getParameter("nascimento");
         int admin = Integer.parseInt(request.getParameter("admin"));
+
+        Cliente clienteEmail = clienteDao.getByEmail(email);
+        Cliente clienteCpf = clienteDao.getByCpf(cpf);
+
+        if(clienteEmail != null && clienteEmail.getId() != id) {
+            Erro erro = new Erro();
+            erro.add("Erro ao atualizar cliente:");
+            erro.add("Este email já está cadastrado.");
+            request.setAttribute("mensagens", erro);
+            request.setAttribute("linkVoltar", "../cliente/edicao?id=" + id);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/views/error.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
+
+        if(clienteCpf != null && clienteCpf.getId() != id) {
+            Erro erro = new Erro();
+            erro.add("Erro ao atualizar cliente:");
+            erro.add("Este CPF já está cadastrado.");
+            request.setAttribute("mensagens", erro);
+            request.setAttribute("linkVoltar", "../cliente/edicao?id=" + id);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/views/error.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
  
         Cliente cliente = new Cliente(id, email, nome, senha, cpf, telefone, sexo, nascimento, admin);
         clienteDao.update(cliente);

@@ -40,7 +40,7 @@
 	<tr>
 		<td><label for="descricao">Descricao</label></td>
 		<td><input type="text" id="descricao" name="descricao" size="256" required
-			value="${agenica.descricao}" /></td>
+			value="${agencia.descricao}" /></td>
 	</tr>
 	<tr>
 		<td colspan="2" align="center"><input type="submit" value="Salva" id="submit"/></td>

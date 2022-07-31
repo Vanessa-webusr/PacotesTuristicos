@@ -17,6 +17,15 @@
 			<a href="/<%= contextPath%>/pacote/lista">Voltar para a lista de Pacotes</a>
 		</h2>
 	</div>
+	<c:if test="${mensagens.existeErros}">
+            <div id="erro">
+                <ul>
+                    <c:forEach var="erro" items="${mensagens.erros}">
+                        <li> ${erro} </li>
+                        </c:forEach>
+                </ul>
+            </div>
+    </c:if>
 	<div align="center">
 		<c:choose>
 			<c:when test="${pacote != null}">

@@ -20,6 +20,9 @@
                 </ul>
             </div>
         </c:if>
+        <c:if test="${linkVoltar != null}">
+            <a href="${linkVoltar}">Voltar</a>
+        </c:if>
         </div>
     </body>
 </html>

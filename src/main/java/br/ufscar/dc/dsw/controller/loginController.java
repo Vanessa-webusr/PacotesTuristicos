@@ -56,6 +56,13 @@ package br.ufscar.dc.dsw.controller;
                     erro(request, response);
             }
         } catch (RuntimeException | IOException | ServletException e){
+            Erro erro = new Erro();
+            erro.add("Erro ao processar a requisição.");
+            erro.add(e.getMessage());
+            request.setAttribute("mensagens", erro);
+            request.setAttribute("linkVoltar", "../pacote/lista");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/views/error.jsp");
+            dispatcher.forward(request, response);
             throw new ServletException(e);
         }  
     }
@@ -109,7 +116,11 @@ package br.ufscar.dc.dsw.controller;
 
     private void erro(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/views/authError.jsp");
-      dispatcher.forward(request, response);
+        Erro erro = new Erro();
+        erro.add("Página não encontrada");
+        request.setAttribute("mensagens", erro);
+        request.setAttribute("linkVoltar", "../views/login.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/error.jsp");
+        dispatcher.forward(request, response);
     }
  }

@@ -59,6 +59,7 @@ import java.util.HashMap;
             erro.add("Você não tem permissão para acessar esta página.");
             request.setAttribute("mensagens", erro);
             request.setAttribute("usuario", usuario);
+            request.setAttribute("linkVoltar", "../pacote/lista");
             RequestDispatcher rd = request.getRequestDispatcher("/views/error.jsp");
             rd.forward(request, response);
             return;
@@ -88,16 +89,19 @@ import java.util.HashMap;
                     Erro erro = new Erro();
                     erro.add("Erro 404:");
                     erro.add("Página não encontrada.");
+                    request.setAttribute("mensagens", erro);
+                    request.setAttribute("linkVoltar", "../pacote/lista");
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/views/error.jsp");
                     dispatcher.forward(request, response);
             }
         } catch (RuntimeException | IOException | ServletException e){
-            //Erro erro = new Erro();
-            //erro.add("Erro ao processar a requisição.");
-            //erro.add(e.getMessage());
-            //request.setAttribute("mensagens", erro);
-            //RequestDispatcher dispatcher = request.getRequestDispatcher("/views/error.jsp");
-            //dispatcher.forward(request, response);
+            Erro erro = new Erro();
+            erro.add("Erro ao processar a requisição.");
+            erro.add(e.getMessage());
+            request.setAttribute("mensagens", erro);
+            request.setAttribute("linkVoltar", "../agencia/lista");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/views/error.jsp");
+            dispatcher.forward(request, response);
             throw new ServletException(e);
         }
     }
@@ -149,8 +153,9 @@ import java.util.HashMap;
             erro.add("Erro ao adicionar agência:");
             erro.add("Email já cadastrado.");
             request.setAttribute("mensagens", erro);
-            RequestDispatcher rd = request.getRequestDispatcher("/views/error.jsp");
-            rd.forward(request, response);
+            request.setAttribute("linkVoltar", "../agencia/cadastro");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/views/error.jsp");
+            dispatcher.forward(request, response);
             return;
         }
 
@@ -159,8 +164,9 @@ import java.util.HashMap;
             erro.add("Erro ao adicionar agência:");
             erro.add("CNPJ já cadastrado.");
             request.setAttribute("mensagens", erro);
-            RequestDispatcher rd = request.getRequestDispatcher("/views/error.jsp");
-            rd.forward(request, response);;
+            request.setAttribute("linkVoltar", "../agencia/cadastro");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/views/error.jsp");
+            dispatcher.forward(request, response);
             return;
         }
  
@@ -179,6 +185,30 @@ import java.util.HashMap;
         String cnpj = request.getParameter("cnpj");
         String nome = request.getParameter("nome");
         String descricao = request.getParameter("descricao");
+
+        Agencia agenciaEmail = agenciaDao.getByEmail(email);
+        Agencia agenciaCnpj = agenciaDao.getByCnpj(cnpj);
+        if(agenciaEmail != null && !agenciaEmail.getId().equals(id)){
+            Erro erro = new Erro();
+            erro.add("Erro ao atualizar agência:");
+            erro.add("Email já cadastrado.");
+            request.setAttribute("mensagens", erro);
+            request.setAttribute("linkVoltar", "../agencia/edicao?id=" + id);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/views/error.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
+
+        if(agenciaCnpj != null && !agenciaCnpj.getId().equals(id)){
+            Erro erro = new Erro();
+            erro.add("Erro ao atualizar agência:");
+            erro.add("CNPJ já cadastrado.");
+            request.setAttribute("mensagens", erro);
+            request.setAttribute("linkVoltar", "../agencia/edicao?id=" + id);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/views/error.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
         
         Agencia agencia = new Agencia(id, email, senha, cnpj, nome, descricao);
         agenciaDao.update(agencia);

@@ -25,7 +25,7 @@
                         <li> ${erro} </li>
                         </c:forEach>
                 </ul>
-            </div>
+        	</div>
         </c:if>
 		<c:choose>
 			<c:when test="${cliente != null}">

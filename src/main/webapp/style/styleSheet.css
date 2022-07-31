@@ -118,3 +118,11 @@ a:link, a:visited, a:hover {
     background: #006699;
     color: white;
 }
+
+#erro ul{
+    background-color: #f48f85;
+    text-align: center;
+    font-size: 24px;
+    list-style-type: none;
+    padding: 8px;
+  }

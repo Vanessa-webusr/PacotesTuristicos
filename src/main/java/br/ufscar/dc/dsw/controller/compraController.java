@@ -89,7 +89,14 @@ import javax.servlet.http.HttpServletResponse;
 	                    erro(request, response);
 	            }
 	        } catch (RuntimeException | IOException | ServletException e){
-	            throw new ServletException(e);
+				Erro erro = new Erro();
+            erro.add("Erro ao processar a requisição.");
+            erro.add(e.getMessage());
+            request.setAttribute("mensagens", erro);
+            request.setAttribute("linkVoltar", "../pacote/lista");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/views/error.jsp");
+            dispatcher.forward(request, response);
+            throw new ServletException(e);
 	        }
 	    }
 	 
@@ -110,6 +117,7 @@ import javax.servlet.http.HttpServletResponse;
 	      throws ServletException, IOException {
 			Erro erro = new Erro("Erro ao acessar a página.");
 			request.setAttribute("mensagens", erro);
+			request.setAttribute("linkVoltar", "../pacote/lista");
 	        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/authError.jsp");
 	        dispatcher.forward(request, response);
 	    }
