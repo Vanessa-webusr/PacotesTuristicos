@@ -141,13 +141,13 @@ import java.util.HashMap;
         dispatcher.forward(request, response);
     }
 
-    private Map<Long, String> getPacote() {
+ /*   private Map<Long, String> getPacote() {
         Map <Long,String> pacotes = new HashMap<>();
         for (Pacote pacote: new PacoteDAO().getAll()) {
             pacotes.put(pacote.getId(), pacote.getCidade());
         }
         return pacotes;
-    }
+    }*/
 
     private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

@@ -58,6 +58,7 @@ create table Compra(
     foreign key (pacote_id) references Pacote(id),
     foreign key (pessoa_id) references Pessoa(id));
 
+<<<<<<< HEAD
 insert into Agencia(cnpj, email, senha, nome, descricao) values ('11111111111', 'agencia1@gmail.com.br', 'abc123', 'Agencia 1', 'descricao agencia de viagem 1');
 insert into Agencia(cnpj, email, senha, nome, descricao) values ('22222222222', 'agencia2@gmail.com.br', 'abc123', 'Agencia 2', 'descricao agencia de viagem 2');
 insert into Agencia(cnpj, email, senha, nome, descricao) values ('33333333333', 'agencia3@gmail.com.br', 'abc123', 'Agencia 3', 'descricao agencia de viagem 3');
@@ -79,6 +80,15 @@ insert into Pacote(cnpj, agencia_id, cidade, estado, pais, data_partida, duracao
 insert into Pacote(cnpj, agencia_id, cidade, estado, pais, data_partida, duracao_dias, valor, descricao) values ('33333333333', 3, 'Londres', 'GL', 'Inglaterra', '2022-08-15', 15, 1000.0, 'Terra da Rainha');
 insert into Pacote(cnpj, agencia_id, cidade, estado, pais, data_partida, duracao_dias, valor, descricao) values ('33333333333', 3, 'Paris', 'FR', 'França', '2022-09-30', 10, 800.0, 'Cidade da luz');
 insert into Pacote(cnpj, agencia_id, cidade, estado, pais, data_partida, duracao_dias, valor, descricao) values ('44444444444', 3, 'Roma', 'IT', 'Italia', '2022-10-31', 7, 600.0, 'Terra dos romanos');
+=======
+insert into Agencia(cnpj, email, senha, nome, descricao) values ('11111111111', 'email@gmail.com', 'senha', 'LMPV Viagens', 'embarque nesse carrossel');    
+    
+insert into Pessoa(cpf, nome, telefone, sexo, data_nascimento, email, senha, cliente_admin) values ('22222222222', 'Lara', '119999999999', 'F', '1997-10-09', 'lara@gmail.com', '1234567', 1);    
+    
+insert into Pessoa(cpf, nome, telefone, sexo, data_nascimento, email, senha, cliente_admin) values ('33333333333', 'Fabio', '1640028922', 'M', '2000-08-20', 'cliente@gmail.com', '123456', 0);        
+    
+insert into Pacote(cnpj, agencia_id, cidade, estado, pais, data_partida, duracao_dias, valor, descricao) values ('0000000000000', 1, 'San Charles', 'SP', 'Brasil', '2022-01-12', 15, 1000.00, 'Tuscou');
+>>>>>>> a6b1c76bd2f97c0aa558a71dc1d0fd733cb5d167
 
 insert into Foto(pacote_id, imagem) values(1, 'https://s2.glbimg.com/Mqwvldscd_dduyARe-XIyHiMkDw=/0x0:620x465/984x0/smart/filters:strip_icc()/s.glbimg.com/jo/g1/f/original/2015/09/09/prefeitura_sao_carlos_final_1.jpg');
 insert into Foto(pacote_id, imagem) values(1, 'https://emc.acidadeon.com/dbimagens/sao_carlos_790x444_09092020090902.jpg');
@@ -113,6 +123,7 @@ insert into Foto(pacote_id, imagem) values(8, 'https://f7j8i5n9.stackpathcdn.com
 insert into Foto(pacote_id, imagem) values(8, 'https://viagemeturismo.abril.com.br/wp-content/uploads/2016/10/paris-verao-franca.jpeg?quality=70&strip=info&w=920&w=636');
 insert into Foto(pacote_id, imagem) values(9, 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Colosseo_2020.jpg/640px-Colosseo_2020.jpg');
 
+<<<<<<< HEAD
 insert into Compra(pacote_id, pessoa_id, valor, ativo) values(1, 1, 1000.0, 1);
 insert into Compra(pacote_id, pessoa_id, valor, ativo) values(2, 1, 2000.0, 1);
 insert into Compra(pacote_id, pessoa_id, valor, ativo) values(6, 1, 2000.0, 0);
@@ -127,4 +138,7 @@ insert into Compra(pacote_id, pessoa_id, valor, ativo) values(3, 3, 9000.0, 0);
 insert into Compra(pacote_id, pessoa_id, valor, ativo) values(8, 3, 1000.0, 1);
 insert into Compra(pacote_id, pessoa_id, valor, ativo) values(4, 4, 2000.0, 1);
 insert into Compra(pacote_id, pessoa_id, valor, ativo) values(5, 4, 3000.0, 1);    
+=======
+insert into Compra(pacote_id, pessoa_id, valor, ativo) values(1, 1, 1000.00, 1);    
+>>>>>>> a6b1c76bd2f97c0aa558a71dc1d0fd733cb5d167
     

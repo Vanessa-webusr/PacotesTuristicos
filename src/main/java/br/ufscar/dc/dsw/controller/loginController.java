@@ -85,14 +85,14 @@ package br.ufscar.dc.dsw.controller;
                 if(usuario != null && usuario.getSenha().equals(senha)){
                     login = new Login(null, usuario, "Cliente");
                 } else {
-                    erro.add("Email ou senha inválidos");
+                    erro.add("Email ou senha inválidos do cliente");
                 }
             } else {
                 Agencia usuario = agenciaDao.getByEmail(email);
                 if(usuario != null && usuario.getSenha().equals(senha)){
                     login = new Login(usuario, null, "Agencia");
                 } else {
-                    erro.add("Email ou senha inválidos");
+                    erro.add("Email ou senha inválidos da agencia");
                 }
             }
             if(!erro.isExisteErros()){

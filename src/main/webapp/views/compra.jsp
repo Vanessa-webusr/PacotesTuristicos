@@ -25,7 +25,7 @@
 			<h4>Fotos:</h4>
 			<c:forEach var="imagem" items="${pacote.imagem}">
 				<c:forEach var="link" items="${imagem.link}">
-					<img src="${link}" width=200 height=200>
+					<img src="${link}" width=250 height=200>
 				</c:forEach>
 			</c:forEach>
 			<br><br>

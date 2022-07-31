@@ -12,7 +12,18 @@
     <tr>
         <td>
             <c:if test="${usuarioLogado != null}">
-                Bem-vindo, <c:if test="${usuarioLogado.cliente != null}">${usuarioLogado.cliente.nome}</c:if><c:if test="${usuarioLogado.agencia != null}">${usuarioLogado.agencia.nome}</c:if>!
+                <c:choose> 
+            		<c:when test="${usuario.cliente.sexo == 'F'}"> 
+            			<c:out value="Bem-vinda, "/>
+            		</c:when>
+                    <c:when test="${usuario.cliente.sexo == 'O'}">
+                        <c:out value="Bem-vinde, "/>
+                    </c:when>
+            		<c:otherwise> 
+            			<c:out value="Bem-vindo, "/>
+            		</c:otherwise>
+				</c:choose>
+                <c:if test="${usuarioLogado.cliente != null}">${usuarioLogado.cliente.nome}</c:if><c:if test="${usuarioLogado.agencia != null}">${usuarioLogado.agencia.nome}</c:if>!
             </c:if>
             <a href="/<%= contextPath%>/pacote/lista">Lista de Pacotes</a>
             <c:if test="${usuarioLogado.cliente != null}">
@@ -22,7 +33,7 @@
                 </c:if>
             </c:if>
             <c:if test="${usuarioLogado.agencia != null}">
-                <a href="/<%= contextPath%>/pacote/listaPorAgencia">Meus Pacotes</a>
+                <a href="/<%= contextPath%>/pacote/listaPorAgencia">Pacotes Agência</a>
             </c:if>
             <c:if test="${usuarioLogado.cliente != null}">
                 <a href="/<%= contextPath%>/compra/lista">Meus Pacotes</a>
