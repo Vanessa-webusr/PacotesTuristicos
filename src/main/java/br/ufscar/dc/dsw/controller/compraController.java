@@ -127,10 +127,13 @@ import javax.servlet.http.HttpServletResponse;
 				listaPorUsuario(request, response);
 				return;
 			}
-			Long pessoa_id = Long.parseLong(request.getParameter("idCliente"));
-			Float valor = Float.parseFloat(request.getParameter("valor"));
-			Compra compra = new Compra(pacote, pessoa_id, valor, 1);
-			compraDao.insert(compra);
+			else{
+				Long pessoa_id = Long.parseLong(request.getParameter("idCliente"));
+				Float valor = Float.parseFloat(request.getParameter("valor"));
+				Compra compra = new Compra(pacote, pessoa_id, valor, 1);
+				compraDao.insert(compra);
+			}
+			
 			response.sendRedirect("../pacote/lista");
 	    }
 
