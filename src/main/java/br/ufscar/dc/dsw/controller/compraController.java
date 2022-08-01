@@ -89,14 +89,7 @@ import javax.servlet.http.HttpServletResponse;
 	                    erro(request, response);
 	            }
 	        } catch (RuntimeException | IOException | ServletException e){
-				Erro erro = new Erro();
-            erro.add("Erro ao processar a requisição.");
-            erro.add(e.getMessage());
-            request.setAttribute("mensagens", erro);
-            request.setAttribute("linkVoltar", "../pacote/lista");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/views/error.jsp");
-            dispatcher.forward(request, response);
-            throw new ServletException(e);
+	            throw new ServletException(e);
 	        }
 	    }
 	 
@@ -117,7 +110,6 @@ import javax.servlet.http.HttpServletResponse;
 	      throws ServletException, IOException {
 			Erro erro = new Erro("Erro ao acessar a página.");
 			request.setAttribute("mensagens", erro);
-			request.setAttribute("linkVoltar", "../pacote/lista");
 	        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/authError.jsp");
 	        dispatcher.forward(request, response);
 	    }
@@ -127,11 +119,18 @@ import javax.servlet.http.HttpServletResponse;
 	    	request.setCharacterEncoding("UTF-8");
 	    	Long pacote_id = Long.parseLong(request.getParameter("idPacote"));
 			Pacote pacote = pacoteDao.get(pacote_id);
-	    	Long pessoa_id = Long.parseLong(request.getParameter("idCliente"));
-	    	Float valor = Float.parseFloat(request.getParameter("valor"));
-	    	Compra compra = new Compra(pacote, pessoa_id, valor, 1);
-	    	compraDao.insert(compra);
-
+			// verifica se o pacote já ocorreu
+			LocalDate dataPartida = LocalDate.parse(pacote.getPartida());
+			if (dataPartida.isBefore(LocalDate.now())) {
+				Erro erro = new Erro("Não é possível comprar um pacote que já ocorreu.");
+				request.setAttribute("mensagens", erro);
+				listaPorUsuario(request, response);
+				return;
+			}
+			Long pessoa_id = Long.parseLong(request.getParameter("idCliente"));
+			Float valor = Float.parseFloat(request.getParameter("valor"));
+			Compra compra = new Compra(pacote, pessoa_id, valor, 1);
+			compraDao.insert(compra);
 			response.sendRedirect("../pacote/lista");
 	    }
 
