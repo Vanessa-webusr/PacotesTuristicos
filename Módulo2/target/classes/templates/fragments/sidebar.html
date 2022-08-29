@@ -9,9 +9,14 @@
 <body>
 	<nav class="sidebar sidebar-open" th:fragment="nav-sidebar">
 		<ul class="nav nav-pills">
-			<li class="nav-item"><a class="nav-link " th:href="@{/home}"> <i
+			<li class="nav-item"><a class="nav-link " th:href="@{/pacote/listar}"> <i
 					class="oi oi-home"></i> <span th:text="#{sidebar.link.home}"></span>
 			</a></li>
+		</ul>
+		<ul class="nav nav-pills" sec:authorize="isAuthenticated()">
+			<li class="nav-item"><form class="nav-link " th:action="@{/logout}" method="post"> <i
+					class="oi oi-account-logout"></i> <input type="submit" name="login-submit" id="login-submit" th:value="Logout"></input>
+			</form></li>
 		</ul>
 		<ul class="nav nav-pills" sec:authorize="!(hasRole('ROLE_AGENCIA') || hasRole('ROLE_ADMIN') || hasRole('ROLE_USER'))">
 			<li class="nav-item"><a class="nav-link " th:href="@{/login}"> <i
@@ -76,6 +81,15 @@
 						<span th:text="#{sidebar.link.listar}"></span>
 				</a></li>
 			</ul>
+		</div>
+		<div>
+			<li class="nav-item">
+				<div>
+			<a th:href="@{''(lang=pt-BR)}"><img alt=""
+				th:src="@{/image/Brasil.gif}" style="width: 30px;" /></a> <a
+				th:href="@{''(lang=en)}"><img alt=""
+				th:src="@{/image/EUA.gif}" style="width: 30px;" /></a></div>
+			</li>
 		</div>
 	</nav>
 </body>

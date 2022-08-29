@@ -6,7 +6,7 @@ html, body {
 }
 
 body {
-	padding-top: 56px;
+	padding-top: 0px;
 	padding-left: 0;
 } 
 
@@ -15,7 +15,7 @@ body {
  */
 .layout-main {
     display: flex;
-    min-height: calc(80vh - 52px);
+    
     overflow: hidden;
 }
 
@@ -84,7 +84,7 @@ body {
 }
 
 .sidebar.sidebar-open {
-    width: 300px;
+    width: 175px;
 }
 
 /*
@@ -124,3 +124,8 @@ body {
 	text-align: center;
 }
 
+#login-submit {
+    background: none;
+    border: none;
+
+}
