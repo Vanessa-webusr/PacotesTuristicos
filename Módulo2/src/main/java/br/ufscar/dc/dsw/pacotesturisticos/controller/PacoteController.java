@@ -1,6 +1,7 @@
 package br.ufscar.dc.dsw.pacotesturisticos.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Base64;
@@ -69,6 +70,11 @@ public class PacoteController {
         }
         Agencia userAgencia = getAgencia();
         pacote.setAgencia(userAgencia);
+        LocalDate dataPartida = LocalDate.parse(pacote.getPartida());
+        if(dataPartida.isBefore(LocalDate.now())){
+            attributes.addFlashAttribute("fail", "Não é possível salvar um pacote que já aconteceu");
+            return "redirect:/pacote/listar";
+        }
         pacoteService.save(pacote);
         try{
             for (MultipartFile multipartFile : imagemFile) {
