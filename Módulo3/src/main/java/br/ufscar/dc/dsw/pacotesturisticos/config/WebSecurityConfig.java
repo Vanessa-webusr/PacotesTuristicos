@@ -39,7 +39,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+    	http.csrf().disable().authorizeRequests()
+    	// Controladores REST
+    	.antMatchers("/clientes", "/agencias", "/pacotes").permitAll()
+    	.antMatchers("/clientes/{\\d+}", "/agencias/{\\d+}").permitAll()
+    	.antMatchers("/pacotes/agencias/{\\d+}").permitAll()
+    	.antMatchers("/pacotes/clientes/{\\d+}").permitAll()
+    	.antMatchers("/pacotes/destinos/{\\w+}").permitAll()
+    	// Demais linhas
+    	.anyRequest().authenticated()
+    	.and().formLogin().loginPage("/login").permitAll()
+    	.and().logout().logoutSuccessUrl("/").permitAll();
+    	
+    	/*http.authorizeRequests()
         .antMatchers("/error", "/login/**", "/js/**", "/imagem/**","/script/**").permitAll()
         .antMatchers("/css/**", "/image/**", "/webjars/**", "/pacote/listar", "/home").permitAll()
         .antMatchers("/agencia/**", "/cliente/**", "/compra/**").hasRole("ADMIN")
@@ -51,6 +63,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         .logout().logoutSuccessUrl("/").permitAll()
         .and()
         .formLogin().loginPage("/login").permitAll();
-        
+        */
     }
 }
