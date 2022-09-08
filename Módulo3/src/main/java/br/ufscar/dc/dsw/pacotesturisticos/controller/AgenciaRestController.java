@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import br.ufscar.dc.dsw.pacotesturisticos.domain.Agencia;
+import br.ufscar.dc.dsw.pacotesturisticos.domain.Pacote;
 import br.ufscar.dc.dsw.pacotesturisticos.service.spec.IAgenciaService;
 
 @CrossOrigin
@@ -50,6 +51,7 @@ private IAgenciaService service;
 		agencia.setNome((String) json.get("nome"));
 		agencia.setCnpj((String) json.get("cnpj"));
 		agencia.setDescricao((String) json.get("descricao"));
+		agencia.setPacotes((List<Pacote>) json.get("pacotes"));
  }
 
 	@GetMapping(path = "/agencias")

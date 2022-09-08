@@ -12,4 +12,5 @@ public interface IPacoteService {
     void save(Pacote pacote);
     void deleteById(long id);
     boolean pacoteTemImagem(long id);
+	List<Pacote> findByCidade(String cidade);
 }

@@ -44,4 +44,10 @@ public class PacoteService implements IPacoteService{
     public boolean pacoteTemImagem(long id) {
         return !pacoteDAO.findById(id).getImagens().isEmpty();
     }
+    
+    @Override
+	@Transactional(readOnly = true)
+	public List<Pacote> findByCidade(String cidade) {
+		return pacoteDAO.findByCidade(cidade);
+	}
 }

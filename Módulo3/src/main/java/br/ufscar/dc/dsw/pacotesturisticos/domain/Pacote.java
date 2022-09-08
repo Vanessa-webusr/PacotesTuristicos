@@ -14,6 +14,9 @@ import javax.validation.constraints.Size;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Pacote")
@@ -53,10 +56,12 @@ public class Pacote extends AbstractEntity<Long>{
     @Size(max = 255, message = "{Size.pacote.descricao}")
     @Column(nullable = false, length = 255)
     private String descricao;
-
+    
+    @JsonBackReference
     @OneToMany(mappedBy = "pacote")
     private List<Imagem> imagens;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "agencia_id")
     private Agencia agencia;

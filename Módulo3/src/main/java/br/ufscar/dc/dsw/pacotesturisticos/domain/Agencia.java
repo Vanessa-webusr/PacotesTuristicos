@@ -13,6 +13,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import br.ufscar.dc.dsw.pacotesturisticos.validation.UniqueEmail;
 import br.ufscar.dc.dsw.pacotesturisticos.validation.UniqueCnpj;
 import br.ufscar.dc.dsw.pacotesturisticos.validation.OnUpdate;
@@ -48,7 +51,8 @@ public class Agencia extends AbstractEntity<Long>{
     @Size(max = 255, message = "{Size.agencia.descricao}")
     @Column(nullable = false, length = 255)
     private String descricao;
-
+    
+    @JsonBackReference
     @OneToMany(mappedBy = "agencia")
     private List<Pacote> pacotes;
 

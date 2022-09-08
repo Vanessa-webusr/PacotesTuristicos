@@ -13,4 +13,5 @@ public interface IPacoteDAO extends CrudRepository<Pacote, Long>{
     List<Pacote> findAll();
     Pacote save(Pacote pacote);
     void deleteById(long id);
+    public List<Pacote> findByCidade(String cidade);
 }

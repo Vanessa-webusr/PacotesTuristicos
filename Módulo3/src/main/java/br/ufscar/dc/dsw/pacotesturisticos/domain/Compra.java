@@ -14,16 +14,20 @@ import javax.validation.constraints.Size;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Compra")
 public class Compra extends AbstractEntity<Long>{
-
+	
+	@JsonManagedReference
     @NotNull(message = "{NotNull.compra.cliente}")
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
-
+	
+	@JsonManagedReference
     @NotNull(message = "{NotNull.compra.pacote}")
     @ManyToOne
     @JoinColumn(name = "pacote_id", nullable = false)
