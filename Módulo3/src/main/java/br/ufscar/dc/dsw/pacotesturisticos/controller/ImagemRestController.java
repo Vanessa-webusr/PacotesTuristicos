@@ -48,10 +48,10 @@ import br.ufscar.dc.dsw.pacotesturisticos.security.UsuarioDetails;
 public class ImagemRestController{
 	
 	@Autowired
-	private IImagemService service;
-	private boolean isJSONValid(String jsonInString) {
+	private IImagemService imagemService;
+	private boolean isJSONValid(byte[] byteStream ) {
 		try {
-			return new ObjectMapper().readTree(jsonInString) != null;
+			return new ObjectMapper().readTree(byteStream) != null;
 		} catch (IOException e) {
 			return false;
 		}	
@@ -110,6 +110,12 @@ public class ImagemRestController{
 	 * 
 	 * 
 	 * }
+	 */
+	//Mostrar todas as imagens
+	/*
+	 * @GetMapping(path = "/imagens") public ResponseEntity<List<Imagem>> lista() {
+	 * List<Imagem> lista = imagemService.findAll(); if (lista.isEmpty()) { return
+	 * ResponseEntity.notFound().build(); } return ResponseEntity.ok(lista); }
 	 */
 	
 }

@@ -85,19 +85,19 @@ public class PacoteRestController{
 
 	}
 	
-	private void parse(List<Imagem> imagem, JSONObject json) {
+	private void parse(List<Imagem> imagens, JSONObject json) {
 		Map<String, Object> map = (Map<String, Object>) json.get("imagem");
 		
 		Object id = map.get("id");
 		if (id instanceof Integer) {
-			((AbstractEntity<Long>) imagem).setId(((Integer) id).longValue());
+			((AbstractEntity<Long>) imagens).setId(((Integer) id).longValue());
 		}
 		else {
-			((AbstractEntity<Long>) imagem).setId((Long) id);
+			((AbstractEntity<Long>) imagens).setId((Long) id);
 		}
 		
-		((Imagem) imagem).setByteStream((byte[]) json.get("byteStream"));
-		((Imagem) imagem).setTipo((String) json.get("tipo"));
+		((Imagem) imagens).setByteStream((byte[]) json.get("byteStream"));
+		((Imagem) imagens).setTipo((String) json.get("tipo"));
 
 	}
 	
@@ -120,15 +120,15 @@ public class PacoteRestController{
 		pacote.setDuracao((int) json.get("duracao"));
 		pacote.setPreco((BigDecimal) json.get("preco"));
 		pacote.setDescricao((String) json.get("descricao"));
-		pacote.setImagens((List<Imagem>) json.get("imagens"));
+		//pacote.setImagens((List<Imagem>) json.get("imagens"));
 		
 		Agencia agencia = new Agencia();
 		parse(agencia, json);
 		pacote.setAgencia(agencia);
 		
-		//List<Imagem> imagem = (List<Imagem>) new Imagem();
-		//parse(imagem, json);
-		//pacote.setImagens(imagem);
+		List<Imagem> imagens = (List<Imagem>) new Imagem();
+		parse(imagens, json);
+		pacote.setImagens(imagens);
 	}
 	
 	//Mostrar todos os pacotes
@@ -185,8 +185,11 @@ public class PacoteRestController{
 	//Mostrar os pacotes de um destino pela cidade
 	@GetMapping(path = "/pacotes/destinos/{cidade}")
 	public ResponseEntity<List<Pacote>> listaPorCidade(@PathVariable("cidade") String cidade){
-		List<Pacote> pacotes = service.findByCidade("%" + cidade + "%");
+		List<Pacote> pacotes = service.findByCidade(cidade);
 		
+		if (pacotes.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
 		return ResponseEntity.ok(pacotes);
 	}
 }
