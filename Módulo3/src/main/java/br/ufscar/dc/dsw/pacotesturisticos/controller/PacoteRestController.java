@@ -145,6 +145,15 @@ public class PacoteRestController{
 		//adicionar imagens de cada pacote a lista
 		return ResponseEntity.ok(lista);
 	}
+
+	@GetMapping(path = "/pacotes/{id}")
+	public ResponseEntity<Pacote> detalhes(@PathVariable("id") Long id) {
+		Pacote pacote = pacoteService.findById(id);
+		if (pacote == null) {
+			return ResponseEntity.notFound().build();	
+		}
+		return ResponseEntity.ok(pacote);
+	}
 	
 	//Mostrar todos os pacotes de um cliente
 	//@GetMapping(path = "/pacotes/clientes/{id}")
@@ -170,7 +179,7 @@ public class PacoteRestController{
 	}
 	
 	//Mostrar todos os pacotes de uma agencia
-	@GetMapping(path = "/pacotes/agencia/{id}")
+	@GetMapping(path = "/pacotes/agencias/{id}")
 	public ResponseEntity<List<Pacote>> listaPorAgencia(@PathVariable("id") long id){
 		
 		Agencia agencia = agenciaService.findById(id);
