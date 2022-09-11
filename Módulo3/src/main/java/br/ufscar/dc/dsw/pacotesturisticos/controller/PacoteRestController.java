@@ -52,9 +52,13 @@ import br.ufscar.dc.dsw.pacotesturisticos.security.UsuarioDetails;
 public class PacoteRestController{
 	
 	@Autowired
-	private IPacoteService service;
+	private IPacoteService pacoteService;
+	@Autowired
+	private IImagemService imagemService;
 	@Autowired
 	private IAgenciaService agenciaService;
+	@Autowired
+	private ICompraService compraService;
 	
 	private boolean isJSONValid(String jsonInString) {
 		try {
@@ -100,7 +104,7 @@ public class PacoteRestController{
 		((Imagem) imagens).setTipo((String) json.get("tipo"));
 
 	}
-	
+	@SuppressWarnings("unchecked")
 	private void parse(Pacote pacote, JSONObject json) {
 		
 		Object id = json.get("id");
@@ -120,7 +124,7 @@ public class PacoteRestController{
 		pacote.setDuracao((int) json.get("duracao"));
 		pacote.setPreco((BigDecimal) json.get("preco"));
 		pacote.setDescricao((String) json.get("descricao"));
-		//pacote.setImagens((List<Imagem>) json.get("imagens"));
+		pacote.setImagens((List<Imagem>) json.get("imagens"));
 		
 		Agencia agencia = new Agencia();
 		parse(agencia, json);
@@ -134,10 +138,11 @@ public class PacoteRestController{
 	//Mostrar todos os pacotes
 	@GetMapping(path = "/pacotes")
 	public ResponseEntity<List<Pacote>> lista() {
-		List<Pacote> lista = service.findAll();
+		List<Pacote> lista = pacoteService.findAll();
 		if (lista.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
+		//adicionar imagens de cada pacote a lista
 		return ResponseEntity.ok(lista);
 	}
 	
@@ -149,24 +154,19 @@ public class PacoteRestController{
 	//Cadastrar novo pacote em uma agencia
 	@PostMapping(path = "/pacotes/agencias/{id}")
 	@ResponseBody
-	public ResponseEntity<Pacote> cria(@RequestBody JSONObject json){
-		
-		try {
-			if(isJSONValid(json.toString())) {
-				Pacote pacote = new Pacote();
-				parse(pacote, json);
-				service.save(pacote);
-				return ResponseEntity.ok(pacote);
-			}
-			else {
-				ResponseEntity.badRequest().body(null);
-			}
+	public ResponseEntity<Pacote> cadastra(@PathVariable("id") Long id, @RequestBody JSONObject json) {
+		Agencia agencia = agenciaService.findById(id);
+		if (agencia == null) {
+			return ResponseEntity.notFound().build();
 		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
+		if (isJSONValid(json.toString())) {
+			Pacote pacote = new Pacote();
+			parse(pacote, json);
+			pacote.setAgencia(agencia);
+			pacoteService.save(pacote);
+			return ResponseEntity.ok(pacote);
 		}
-		return null;
+		return ResponseEntity.badRequest().build();
 	}
 	
 	//Mostrar todos os pacotes de uma agencia
@@ -174,7 +174,7 @@ public class PacoteRestController{
 	public ResponseEntity<List<Pacote>> listaPorAgencia(@PathVariable("id") long id){
 		
 		Agencia agencia = agenciaService.findById(id);
-		List<Pacote> lista = service.findByAgencia(agencia);
+		List<Pacote> lista = pacoteService.findByAgencia(agencia);
 		
 		if (lista.isEmpty()) {
 			return ResponseEntity.notFound().build();
@@ -185,7 +185,7 @@ public class PacoteRestController{
 	//Mostrar os pacotes de um destino pela cidade
 	@GetMapping(path = "/pacotes/destinos/{cidade}")
 	public ResponseEntity<List<Pacote>> listaPorCidade(@PathVariable("cidade") String cidade){
-		List<Pacote> pacotes = service.findByCidade(cidade);
+		List<Pacote> pacotes = pacoteService.findByCidade(cidade);
 		
 		if (pacotes.isEmpty()) {
 			return ResponseEntity.notFound().build();

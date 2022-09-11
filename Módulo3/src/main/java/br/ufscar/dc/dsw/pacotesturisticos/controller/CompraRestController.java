@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -57,6 +58,9 @@ public class CompraRestController{
 	
 	@Autowired
 	private IClienteService clienteService;
+
+	@Autowired
+	private IAgenciaService agenciaService;
 	
 	private boolean isJSONValid(String jsonInString) {
 		try {
@@ -145,6 +149,11 @@ Map<String, Object> map = (Map<String, Object>) json.get("pacote");
 			if (isJSONValid(json.toString())) {
 				Compra compra = new Compra();
 				parse(compra, json);
+				LocalDate dataPartida = LocalDate.parse(compra.getPacote().getPartida());
+				if(dataPartida.isBefore(LocalDate.now())){
+					return ResponseEntity.badRequest().build();
+				}
+				compra.setAtivo(true);
 				compraService.save(compra);
 				return ResponseEntity.ok(compra);
 			} else {
@@ -155,19 +164,65 @@ Map<String, Object> map = (Map<String, Object>) json.get("pacote");
 			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
 		}
 	}
+
+	@PutMapping(path = "/compras/{id}")
+	public ResponseEntity<Compra> update(@PathVariable("id") long id) {
+		Compra compra = compraService.findById(id);
+		if (compra == null) {
+			return ResponseEntity.notFound().build();
+		} else {
+			LocalDate dataPartida = LocalDate.parse(compra.getPacote().getPartida());
+			if(dataPartida.minusDays(5).isBefore(LocalDate.now())){
+				return ResponseEntity.badRequest().build();
+			}
+			compra.setAtivo(false);
+			compraService.save(compra);
+			return ResponseEntity.ok(compra);
+		}
+	}
 	
 	@GetMapping(path = "/compras/cliente/{id}")
-	public ResponseEntity<List<Compra>> listaPorEstado(@PathVariable("id") long id) {
+	public ResponseEntity<List<Compra>> listaPorCliente(@PathVariable("id") long id) {
 		
 		Cliente cliente = clienteService.findById(id);
 		List<Compra> lista = compraService.findByCliente(cliente);
 		
-		if (lista.isEmpty()) {
+		if (lista == null) {
 			return ResponseEntity.notFound().build();
+		} else {
+			return ResponseEntity.ok(lista);
 		}
-		return ResponseEntity.ok(lista);
+	}
+
+	@GetMapping(path = "/compras")
+	public ResponseEntity<List<Compra>> lista() {
+		List<Compra> lista = compraService.findAll();
+		if (lista == null) {
+			return ResponseEntity.notFound().build();
+		} else {
+			return ResponseEntity.ok(lista);
+		}
+	}
+
+	@GetMapping(path = "/compras/{id}")
+	public ResponseEntity<Compra> busca(@PathVariable("id") long id) {
+		Compra compra = compraService.findById(id);
+		if (compra == null) {
+			return ResponseEntity.notFound().build();
+		} else {
+			return ResponseEntity.ok(compra);
+		}
 	}
 	
-	
+	@DeleteMapping(path = "/compras/{id}")
+	public ResponseEntity<Compra> delete(@PathVariable("id") long id) {
+		Compra compra = compraService.findById(id);
+		if (compra == null) {
+			return ResponseEntity.notFound().build();
+		} else {
+			compraService.deleteById(compra.getId());
+			return ResponseEntity.ok(compra);
+		}
+	}
 	
 }

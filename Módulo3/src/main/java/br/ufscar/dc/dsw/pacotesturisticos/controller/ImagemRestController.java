@@ -101,21 +101,63 @@ public class ImagemRestController{
 		
 	}
 	
-	/*
-	 * @DeleteMapping(path = "/imagem/{id}") public ResponseEntity<Boolean>
-	 * remove(@PathVariable("id") long id){ Imagem imagem = service.findById(id); if
-	 * (imagem == null) { return ResponseEntity.notFound().build(); }
-	 * 
-	 * else { service.deleteById(id); return ResponseEntity.noContent().build(); }
-	 * 
-	 * 
-	 * }
-	 */
-	//Mostrar todas as imagens
-	/*
-	 * @GetMapping(path = "/imagens") public ResponseEntity<List<Imagem>> lista() {
-	 * List<Imagem> lista = imagemService.findAll(); if (lista.isEmpty()) { return
-	 * ResponseEntity.notFound().build(); } return ResponseEntity.ok(lista); }
-	 */
-	
+	@GetMapping(path = "/imagens")
+	public ResponseEntity<List<Imagem>> lista() {
+		List<Imagem> lista = imagemService.findAll();
+		if (lista.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(lista);
+	}
+
+	@GetMapping(path = "/imagens/{id}")
+	public ResponseEntity<Imagem> lista(@PathVariable("id") long id) {
+		Imagem imagem = imagemService.findById(id);
+		if (imagem == null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(imagem);
+	}
+
+	@PostMapping(path = "/imagens")
+	public ResponseEntity<Imagem> cria(@RequestParam("imagem") String imagemJSON, @RequestParam("file") MultipartFile file) {
+		if (isJSONValid(imagemJSON.getBytes())) {
+			Imagem imagem = new Imagem();
+			JSONObject json = new JSONObject();
+			parse(imagem, json);
+			Imagem imagem2 = imagemService.findById(imagem.getId());
+			if (imagem2 != null) {
+				return ResponseEntity.badRequest().build();
+			}
+			imagemService.save(imagem);
+			return ResponseEntity.ok(imagem);
+		}
+		return ResponseEntity.badRequest().build();
+	}
+
+	@PutMapping(path = "/imagens/{id}")
+	public ResponseEntity<Imagem> atualiza(@PathVariable("id") long id, @RequestParam("imagem") String imagemJSON, @RequestParam("file") MultipartFile file) {
+		if (isJSONValid(imagemJSON.getBytes())) {
+			Imagem imagem = new Imagem();
+			JSONObject json = new JSONObject();
+			parse(imagem, json);
+			Imagem imagem2 = imagemService.findById(imagem.getId());
+			if (imagem2 == null) {
+				return ResponseEntity.notFound().build();
+			}
+			imagemService.save(imagem);
+			return ResponseEntity.ok(imagem);
+		}
+		return ResponseEntity.badRequest().build();
+	}
+
+	@DeleteMapping(path = "/imagens/{id}")
+	public ResponseEntity<Boolean> remove(@PathVariable("id") long id) {
+		Imagem imagem = imagemService.findById(id);
+		if (imagem == null) {
+			return ResponseEntity.notFound().build();
+		}
+		imagemService.deleteById(id);
+		return ResponseEntity.ok(true);
+	}
 }

@@ -17,15 +17,30 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import br.ufscar.dc.dsw.pacotesturisticos.domain.Agencia;
+import br.ufscar.dc.dsw.pacotesturisticos.domain.Cliente;
+import br.ufscar.dc.dsw.pacotesturisticos.domain.Compra;
+import br.ufscar.dc.dsw.pacotesturisticos.domain.Imagem;
 import br.ufscar.dc.dsw.pacotesturisticos.domain.Pacote;
 import br.ufscar.dc.dsw.pacotesturisticos.service.spec.IAgenciaService;
+import br.ufscar.dc.dsw.pacotesturisticos.service.spec.IClienteService;
+import br.ufscar.dc.dsw.pacotesturisticos.service.spec.ICompraService;
+import br.ufscar.dc.dsw.pacotesturisticos.service.spec.IImagemService;
+import br.ufscar.dc.dsw.pacotesturisticos.service.spec.IPacoteService;
 
 @CrossOrigin
 @RestController
 
 public class AgenciaRestController {
 	@Autowired
-private IAgenciaService service;
+	private IAgenciaService agenciaService;
+	@Autowired
+	private IClienteService clienteService;
+	@Autowired
+	private IPacoteService pacoteService;
+	@Autowired
+	private ICompraService compraService;
+	@Autowired
+	private IImagemService imagemService;
 	
 	private boolean isJSONValid(String jsonInString) {
 		try {
@@ -56,7 +71,7 @@ private IAgenciaService service;
 
 	@GetMapping(path = "/agencias")
 	public ResponseEntity<List<Agencia>> lista() {
-		List<Agencia> lista = service.findAll();
+		List<Agencia> lista = agenciaService.findAll();
 		if (lista.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
@@ -65,7 +80,7 @@ private IAgenciaService service;
 
 	@GetMapping(path = "/agencias/{id}")
 	public ResponseEntity<Agencia> lista(@PathVariable("id") long id) {
-		Agencia agencia = service.findById(id);
+		Agencia agencia = agenciaService.findById(id);
 		if (agencia == null) {
 			return ResponseEntity.notFound().build();
 		}
@@ -79,7 +94,20 @@ private IAgenciaService service;
 			if (isJSONValid(json.toString())) {
 				Agencia agencia = new Agencia();
 				parse(agencia, json);
-				service.save(agencia);
+				Agencia agencia2 = agenciaService.findById(agencia.getId());
+				if (agencia2 != null) {
+					return ResponseEntity.status(HttpStatus.CONFLICT).build();
+				}
+				agencia2 = agenciaService.findByCnpj(agencia.getCnpj());
+				if (agencia2 != null) {
+					return ResponseEntity.status(HttpStatus.CONFLICT).build();
+				}
+				agencia2 = agenciaService.findByEmail(agencia.getEmail());
+				Cliente cliente = clienteService.findByEmail(agencia.getEmail());
+				if (agencia2 != null || cliente != null) {
+					return ResponseEntity.status(HttpStatus.CONFLICT).build();
+				}
+				agenciaService.save(agencia);
 				return ResponseEntity.ok(agencia);
 			} else {
 				return ResponseEntity.badRequest().body(null);
@@ -94,12 +122,24 @@ private IAgenciaService service;
 	public ResponseEntity<Agencia> atualiza(@PathVariable("id") long id, @RequestBody JSONObject json) {
 		try {
 			if (isJSONValid(json.toString())) {
-				Agencia agencia = service.findById(id);
+				Agencia agencia = agenciaService.findById(id);
 				if (agencia == null) {
 					return ResponseEntity.notFound().build();
 				} else {
 					parse(agencia, json);
-					service.save(agencia);
+					if (agencia.getId() != id) {
+						return ResponseEntity.badRequest().build();
+					}
+					Agencia agencia2 = agenciaService.findByCnpj(agencia.getCnpj());
+					if (agencia2 != null && agencia2.getId() != agencia.getId()) {
+						return ResponseEntity.status(HttpStatus.CONFLICT).build();
+					}
+					agencia2 = agenciaService.findByEmail(agencia.getEmail());
+					Cliente cliente = clienteService.findByEmail(agencia.getEmail());
+					if (agencia2 != null && agencia2.getId() != agencia.getId() || cliente != null) {
+						return ResponseEntity.status(HttpStatus.CONFLICT).build();
+					}
+					agenciaService.save(agencia);
 					return ResponseEntity.ok(agencia);
 				}
 			} else {
@@ -113,11 +153,23 @@ private IAgenciaService service;
 	@DeleteMapping(path = "/agencias/{id}")
  public ResponseEntity<Boolean> remove(@PathVariable("id") long id) {
 
-		Agencia agencia = service.findById(id);
+		Agencia agencia = agenciaService.findById(id);
 		if (agencia == null) {
 			return ResponseEntity.notFound().build();
 		} else {
-			service.deleteById(id);
+			List<Pacote> pacotes = pacoteService.findByAgencia(agencia);
+			for (Pacote pacote : pacotes) {
+				List<Compra> compras = compraService.findByPacote(pacote);
+				for (Compra compra : compras) {
+					compraService.deleteById(compra.getId());
+				}
+				List<Imagem> imagens = imagemService.findByPacote(pacote);
+				for (Imagem imagem : imagens) {
+					imagemService.deleteById(imagem.getId());
+				}
+				pacoteService.deleteById(pacote.getId());
+			}
+			agenciaService.deleteById(id);
 			return ResponseEntity.noContent().build();
 		}
 	}

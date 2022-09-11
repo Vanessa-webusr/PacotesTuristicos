@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-PacotesturisticosApplication<pacotesturisticos>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "br.ufscar.dc.dsw.pacotesturisticos.PacotesturisticosApplication",
+            "projectName": "pacotesturisticos",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
