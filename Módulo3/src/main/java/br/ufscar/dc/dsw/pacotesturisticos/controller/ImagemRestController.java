@@ -35,6 +35,7 @@ import br.ufscar.dc.dsw.pacotesturisticos.domain.Agencia;
 import br.ufscar.dc.dsw.pacotesturisticos.domain.Compra;
 import br.ufscar.dc.dsw.pacotesturisticos.service.spec.IPacoteService;
 import br.ufscar.dc.dsw.pacotesturisticos.service.spec.IImagemService;
+import br.ufscar.dc.dsw.pacotesturisticos.service.impl.PacoteService;
 import br.ufscar.dc.dsw.pacotesturisticos.service.spec.IAgenciaService;
 import br.ufscar.dc.dsw.pacotesturisticos.service.spec.ICompraService;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,6 +50,9 @@ public class ImagemRestController{
 	
 	@Autowired
 	private IImagemService imagemService;
+	@Autowired
+	private IPacoteService pacoteService;
+
 	private boolean isJSONValid(byte[] byteStream ) {
 		try {
 			return new ObjectMapper().readTree(byteStream) != null;
@@ -117,6 +121,15 @@ public class ImagemRestController{
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(imagem);
+	}
+
+	@GetMapping(path = "/imagens/pacotes/{id}")
+	public ResponseEntity<List<Imagem>> listaImagensPacote(@PathVariable("id") long id) {
+		List<Imagem> lista = pacoteService.findById(id).getImagens();
+		if (lista.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(lista);
 	}
 
 	@PostMapping(path = "/imagens")

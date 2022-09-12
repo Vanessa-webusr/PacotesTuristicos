@@ -42,10 +42,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     	http.csrf().disable().authorizeRequests()
     	// Controladores REST
     	.antMatchers("/clientes", "/agencias", "/pacotes", "/compras", "/imagens").permitAll()
-    	.antMatchers("/clientes/{\\d+}", "/agencias/{\\d+}", "/pacotes/{\\d+}").permitAll()
+    	.antMatchers("/clientes/{\\d+}", "/agencias/{\\d+}", "/pacotes/{\\d+}", "/compras/{\\d+}").permitAll()
     	.antMatchers("/pacotes/agencias/{\\d+}").permitAll()
     	.antMatchers("/pacotes/clientes/{\\d+}").permitAll()
     	.antMatchers("/pacotes/destinos/{\\w+}").permitAll()
+        .antMatchers("/compras/clientes/{\\w+}").permitAll()
+        .antMatchers("/imagens/pacotes/{\\w+}").permitAll()
     	// Demais linhas
     	//.anyRequest().authenticated();
     	//.and().formLogin().loginPage("/login").permitAll()

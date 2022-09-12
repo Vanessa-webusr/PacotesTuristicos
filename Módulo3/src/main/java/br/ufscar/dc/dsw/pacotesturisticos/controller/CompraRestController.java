@@ -181,7 +181,7 @@ Map<String, Object> map = (Map<String, Object>) json.get("pacote");
 		}
 	}
 	
-	@GetMapping(path = "/compras/cliente/{id}")
+	@GetMapping(path = "/compras/clientes/{id}")
 	public ResponseEntity<List<Compra>> listaPorCliente(@PathVariable("id") long id) {
 		
 		Cliente cliente = clienteService.findById(id);

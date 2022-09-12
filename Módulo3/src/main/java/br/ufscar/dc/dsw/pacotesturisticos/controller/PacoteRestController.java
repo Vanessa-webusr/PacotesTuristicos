@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -122,7 +123,15 @@ public class PacoteRestController{
 		pacote.setPais((String) json.get("pais"));
 		pacote.setPartida((String) json.get("partida"));
 		pacote.setDuracao((int) json.get("duracao"));
-		pacote.setPreco((BigDecimal) json.get("preco"));
+		//se preco for integer, converter para bigdecimal
+		if(json.get("preco") instanceof Integer) {
+			pacote.setPreco(new BigDecimal((Integer) json.get("preco")));
+		} else if (json.get("preco") instanceof Double) {
+			//Duas casas decimais
+			pacote.setPreco(new BigDecimal((Double) json.get("preco")).setScale(2, RoundingMode.HALF_EVEN));
+		} else {
+			pacote.setPreco((BigDecimal) json.get("preco"));
+		}
 		pacote.setDescricao((String) json.get("descricao"));
 		pacote.setImagens((List<Imagem>) json.get("imagens"));
 		
@@ -130,9 +139,11 @@ public class PacoteRestController{
 		parse(agencia, json);
 		pacote.setAgencia(agencia);
 		
-		List<Imagem> imagens = (List<Imagem>) new Imagem();
-		parse(imagens, json);
-		pacote.setImagens(imagens);
+		if(json.get("imagens") != null){
+			List<Imagem> imagens = new ArrayList<Imagem>();
+			parse(imagens, json);
+			pacote.setImagens(imagens);
+		}
 	}
 	
 	//Mostrar todos os pacotes
@@ -194,6 +205,7 @@ public class PacoteRestController{
 	//Mostrar os pacotes de um destino pela cidade
 	@GetMapping(path = "/pacotes/destinos/{cidade}")
 	public ResponseEntity<List<Pacote>> listaPorCidade(@PathVariable("cidade") String cidade){
+		cidade = cidade.replace("+", " ");
 		List<Pacote> pacotes = pacoteService.findByCidade(cidade);
 		
 		if (pacotes.isEmpty()) {
