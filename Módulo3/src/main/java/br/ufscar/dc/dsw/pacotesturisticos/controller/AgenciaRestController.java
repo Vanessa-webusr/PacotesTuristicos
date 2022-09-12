@@ -94,9 +94,12 @@ public class AgenciaRestController {
 			if (isJSONValid(json.toString())) {
 				Agencia agencia = new Agencia();
 				parse(agencia, json);
-				Agencia agencia2 = agenciaService.findById(agencia.getId());
-				if (agencia2 != null) {
-					return ResponseEntity.status(HttpStatus.CONFLICT).build();
+				Agencia agencia2 = null;
+				if(agencia.getId() != null){
+					agencia2 = agenciaService.findById(agencia.getId());
+					if (agencia2 != null) {
+						return ResponseEntity.status(HttpStatus.CONFLICT).build();
+					}
 				}
 				agencia2 = agenciaService.findByCnpj(agencia.getCnpj());
 				if (agencia2 != null) {

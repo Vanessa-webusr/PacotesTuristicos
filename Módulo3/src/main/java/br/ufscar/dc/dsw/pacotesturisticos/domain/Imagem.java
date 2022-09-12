@@ -17,6 +17,7 @@ import javax.validation.constraints.Size;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @SuppressWarnings("serial")
@@ -31,7 +32,7 @@ public class Imagem extends AbstractEntity<Long>{
     @NotNull(message = "{NotNull.imagem.tipo}")
     private String tipo;
     
-    @JsonManagedReference
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "pacote_id")
     private Pacote pacote;
@@ -59,9 +60,5 @@ public class Imagem extends AbstractEntity<Long>{
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
-    }
-
-    public String getBase64(){
-        return new String(Base64.getEncoder().encode(byteStream));
     }
 }

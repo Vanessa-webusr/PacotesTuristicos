@@ -57,7 +57,7 @@ public class Pacote extends AbstractEntity<Long>{
     @Column(nullable = false, length = 255)
     private String descricao;
     
-    @JsonBackReference
+    @JsonManagedReference
     @OneToMany(mappedBy = "pacote")
     private List<Imagem> imagens;
 

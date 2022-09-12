@@ -91,9 +91,12 @@ public class ClienteRestController {
 			if (isJSONValid(json.toString())) {
 				Cliente cliente = new Cliente();
 				parse(cliente, json);
-				Cliente cliente2 = clienteService.findById(cliente.getId());
-				if (cliente2 != null) {
-					return ResponseEntity.status(HttpStatus.CONFLICT).build();
+				Cliente cliente2 = null;
+				if(cliente.getId() != null){
+					cliente2 = clienteService.findById(cliente.getId());
+					if (cliente2 != null) {
+						return ResponseEntity.status(HttpStatus.CONFLICT).build();
+					}
 				}
 				cliente2 = clienteService.findByEmail(cliente.getEmail());
 				Agencia agencia = agenciaService.findByEmail(cliente.getEmail());
