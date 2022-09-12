@@ -135,10 +135,11 @@ public class PacoteRestController{
 		pacote.setDescricao((String) json.get("descricao"));
 		pacote.setImagens((List<Imagem>) json.get("imagens"));
 		
-		Agencia agencia = new Agencia();
-		parse(agencia, json);
-		pacote.setAgencia(agencia);
-		
+		if (json.get("agencia") != null){
+			Agencia agencia = new Agencia();
+			parse(agencia, json);
+			pacote.setAgencia(agencia);
+		}
 		if(json.get("imagens") != null){
 			List<Imagem> imagens = new ArrayList<Imagem>();
 			parse(imagens, json);
